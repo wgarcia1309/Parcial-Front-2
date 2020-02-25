@@ -1,0 +1,47 @@
+*{
+    box-sizing: border-box;
+}
+
+html,body,.container-fluid,.sides{
+    height: 100%;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited, .bg-primary {
+    background-color: #5C2FD9 !important;
+}
+
+.form-control:focus {
+    border-color: #5C2FD9;;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(92, 47, 219, 0.6);
+  }
+
+.my-card{
+    max-width: 500px ;
+    border-color: #5C2FD9;
+  }
+.left-side{
+    background-color: #5C2FD9;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100%;
+}
+.right-side{
+    height: 100%;
+    padding: 0 0 0 0;
+}
+.login-section{
+    position: absolute;
+    width: 100%;
+    padding-top: 100px;
+    padding-left: 110px;
+    padding-right: 110px;
+}
+.brand-login{
+    width: 100%;
+}
+.cards-section{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
