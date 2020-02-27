@@ -10,23 +10,26 @@
   <title>Parcia-l FrontEnd</title>
 </head>
 <body>
-<!--Nav section-->
-  <nav class="navbar navbar-dark bg-primary">
+  
+  <!--Nav section-->
+  <nav class="navbar navbar-expand-lg navbar-expand-md navbar-dark bg-primary justify-content-end">
     <a class="navbar-brand" href="#">
       <img src="image/logo.svg" width="32" height="32" alt="">
     </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
-        <span class="navbar-toggler-icon"></span>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="navbar-collapse collapse" id="collapsingNavbar">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Evaluador <span class="sr-only">Home</span></a>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="index.html">Cerrar sesión <span class="sr-only">Home</span></a>
-          </li>
-        </ul>
+
+    <div class="collapse navbar-collapse " id="navbarNav">
+      <ul class="navbar-nav text-right">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Evaluador <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Cerrar sesion</a>
+        </li>
+      </ul>
     </div>
   </nav>
 

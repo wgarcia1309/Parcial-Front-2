@@ -6,6 +6,9 @@ html,body,.container-fluid,.sides{
     height: 100%;
 }
 
+li {
+    list-style-type: none;
+}
 /* Overriding bootstrap 4*/
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited, .bg-primary {
     background-color: #5C2FD9 !important;
@@ -17,21 +20,14 @@ html,body,.container-fluid,.sides{
     border-color: #5C2FD9;
   }
 
-.card-question{
-    max-width: none;   
-
-}
-
 .left-side{
     background-color: #5C2FD9;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    height: 100%;
 }
 
 .right-side{
-    height: 100%;
     padding: 0 0 0 0;
 }
 
@@ -53,6 +49,26 @@ html,body,.container-fluid,.sides{
     justify-content: space-around;
 }
 
+.question{
+    background:white;
+    padding: 15px;
+    border: 2px solid  rgba(92, 47, 217, 0.9);;
+    color:  rgba(92, 47, 217, 0.9);;
+    border-radius: 20px 20px 0px 0px;
+}
+
+.answers{
+    padding-top: 5px;
+    border: 2px solid rgba(92, 47, 217, 0.9);
+    border-radius:  0px 0px 20px 20px;
+    border-top: 0px;
+}
+
+.resultados-evaluacion{
+    color: #5C2FD9;
+    display: flex;
+    justify-content: space-around;
+}
 @media screen and (min-width: 0px) and (max-width: 767px) {
     .left-side{  
         height: 40%;
@@ -68,15 +84,15 @@ html,body,.container-fluid,.sides{
         box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(255, 255, 255,0.6);
     }
   }
-
+  
 @media screen and (min-width: 768px) {
-    .right-side{
-        background-color:white;
-        height: 100%; 
-    }
     .left-side{
         height: 100%;
         color:white;
+    }
+    .right-side{
+        background-color:white;
+        height: 100%; 
     }
     .form-control:focus {
         border-color: #5C2FD9;
