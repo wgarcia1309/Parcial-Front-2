@@ -6,19 +6,22 @@ html,body,.container-fluid,.sides{
     height: 100%;
 }
 
+/* Overriding bootstrap 4*/
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited, .bg-primary {
     background-color: #5C2FD9 !important;
 }
 
-.form-control:focus {
-    border-color: #5C2FD9;;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(92, 47, 219, 0.6);
-  }
-
-.my-card{
+/* custom CSS*/
+.card-customization{
     max-width: 500px ;
     border-color: #5C2FD9;
   }
+
+.card-question{
+    max-width: none;   
+
+}
+
 .left-side{
     background-color: #5C2FD9;
     background-size: cover;
@@ -26,10 +29,12 @@ html,body,.container-fluid,.sides{
     background-repeat: no-repeat;
     height: 100%;
 }
+
 .right-side{
     height: 100%;
     padding: 0 0 0 0;
 }
+
 .login-section{
     position: absolute;
     width: 100%;
@@ -37,11 +42,44 @@ html,body,.container-fluid,.sides{
     padding-left: 110px;
     padding-right: 110px;
 }
+
 .brand-login{
     width: 100%;
 }
+
 .cards-section{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
+
+@media screen and (min-width: 0px) and (max-width: 767px) {
+    .left-side{  
+        height: 40%;
+    }
+
+    .right-side{
+        background-color:#5C2FD9;
+        height: 60%; 
+    }
+
+    .form-control:focus {
+        border-color: #FFFFFF;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgb(255, 255, 255,0.6);
+    }
+  }
+
+@media screen and (min-width: 768px) {
+    .right-side{
+        background-color:white;
+        height: 100%; 
+    }
+    .left-side{
+        height: 100%;
+        color:white;
+    }
+    .form-control:focus {
+        border-color: #5C2FD9;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(92, 47, 219, 0.6);
+    }
+  }
