@@ -9,36 +9,33 @@
     <link rel="stylesheet" href="css/styles.css">
     <title>Parcia-l FrontEnd</title>
 </head>
-<body>
+<body class="body-login">
     <div class="container-fluid">
         <div class="row sides">
-            <section class="col-md-6 w-100 left-side">
-               <img class="brand-login"  height="100%"  src="image/logo.svg">
+            <section class="col-md-6 left-side">
+               <img class="brand-login"  height="50%"  src="image/logo.svg">
             </section>
-            <section class="col-md-6 w-100 right-side">
-                <section class="login-section">
-                    <form>
+            <section class="col-md-6 right-side login-section">
+                    <form action="operador.html">
+                        <h2 class="mb-1">Iniciar sesión</h2>
                         <div class="form-group">
-                            <input type="email" placeholder="example@example.com" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                            <h4>Correo</h4>
+                          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Ingresar Email">
                         </div>
-                        <br>
                         <div class="form-group">
-                            <input type="password" placeholder="Password" class="form-control" id="exampleInputPassword1">
+                            <h4>Contraseña</h4>
+                          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Contraseña">
                         </div>
-                        <div class="form-group d-flex justify-content-between">
-                            <div class="custom-control">
-                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                <label class="form-check-label" for="exampleCheck1">Stay signed in</label>
-                            </div>
-                            <div>
-                                <a href="#">Forgot Password?</a>
-                            </div>
+                        <div class="form-check d-flex mb-3 justify-content-between" >
+                          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                          <label class="form-check-label" for="exampleCheck1">Mantener sesion iniciada</label>
+                          <a href="#" class="a-color">Olvide mi Contraseña</a>
                         </div>
-                        <a href="operador.html" class="btn btn-primary btn-lg btn-block">
-                            Iniciar sesión
-                        </a>
-                    </form>
-                </section>
+                        <button type="submit" class="btn btn-dark btn-lg  btn-block ">Ingresar</button>
+                      </form>
+
+
+
             </section>
         </div>
     </div>
