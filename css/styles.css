@@ -4,7 +4,7 @@
     box-sizing: border-box;
 }
 
-html,body,.container-fluid,.sides{
+html,body,.sides{
     height: 100%;
 }
 
@@ -71,7 +71,7 @@ li {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 80px);
 }
 
 .score{

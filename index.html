@@ -8,10 +8,33 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
-    <title>Parcia-l FrontEnd</title>
+    <title>Parcial-2 FrontEnd</title>
 </head>
 <body class="body-login">
-    <div class="container-fluid">
+   <!--Nav section-->
+   <nav class="navbar navbar-expand-lg navbar-expand-md navbar-dark bg-dark mb-3">
+    <a class="navbar-brand" href="#">
+      <img src="image/logo.svg" width="32" height="32" alt="">
+    </a>
+    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse " id="navbarNav">
+      <ul class="navbar-nav text-right">
+        <li class="nav-item">
+          <a class="nav-link" href="#">Inicio</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="registro.html">Registrate<span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+    <div class="center-section">
         <div class="row sides">
             <section class="col-md-6 left-side">
                <img class="brand-login"  height="50%"  src="image/logo.svg">
@@ -35,9 +58,14 @@
                         <div class="form-check d-flex mb-1 justify-content-between" >
                           <input type="checkbox" class="form-check-input" id="exampleCheck1">
                           <label class="form-check-label" for="exampleCheck1">Mantener sesion iniciada</label>
-                          <a href="#" class="a-color">Olvide mi Contraseña</a>
+                          <a href="recovery.html" class="a-color">Olvide mi Contraseña</a>
                         </div>
                         <button type="submit" class="btn btn-dark btn-lg shadow-lg btn-block mb-3">Ingresar</button>
+                        <div class="d-flex mb-1 justify-content-between" >
+                          <p>Eres una empresa? <a href="registro.html" class="a-color">Resgistrate</a></p>
+                          
+                        </div>
+
                       </div>
                       </form>
 
