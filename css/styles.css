@@ -1,40 +1,43 @@
 @import url('https://fonts.googleapis.com/css?family=Oxanium&display=swap');
 
-*{
+* {
     box-sizing: border-box;
 }
 
-html,body,.sides{
+html,
+body,
+.sides {
     height: 100%;
 }
 
-.body-color{
-    background-color:#F77F00;
+.body-color {
+    background-color: #F77F00;
     /*background: linear-gradient(to bottom,#F77F00,rgb(240, 136, 25));*/
 }
+
 li {
     list-style-type: none;
 }
 
-.left-side{
+.left-side {
     display: flex;
     flex-flow: column;
     justify-content: center;
-/*    background-color: #E6C229;*/
+    /*    background-color: #E6C229;*/
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.right-side{
-    
+.right-side {
+
     display: flex;
     flex-flow: column;
     justify-content: center;
     padding: 0 0 0 0;
 }
 
-.login-section{
+.login-section {
     display: flex;
     padding-left: 80px;
     padding-right: 80px;
@@ -42,77 +45,113 @@ li {
 }
 
 
-.a-color{
-    color:#212529;
+.a-color {
+    color: #212529;
 }
 
-.cards-section{
+.cards-section {
     display: flex;
-    justify-content:  center;
+    justify-content: center;
     flex-flow: row wrap;
 }
 
-.card-customization{
+.card-customization {
     width: 12rem;
 }
 
-.questions-bg{
+.questions-bg {
     background-color: white;
     border-radius: 10px;
     text-align: center;
 }
 
-.answers{
+.card {
+    width: 700px;
+    margin: 20px;
+}
+
+.alinear {
+    margin-right: 15px;
+    position: absolute;
+    top: 70px;
+    right: 0px;
+}
+
+.answers {
     text-align: justify;
 }
-.center-section{
+
+.center-section {
     padding: 0 0 0 0;
     margin: 0 0 0 0;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    height: calc(100vh - 80px);
+    
+} 
+
+.center-chart {
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    height: calc(80vh - 80px);
 }
 
-.score{
+.score {
     font-size: 5em;
     font-weight: bold;
-    font-family: 'Oxanium' ;
+    font-family: 'Oxanium';
 }
 
-.text-font{
+.text-font {
     font-weight: bold;
-    font-family: 'Oxanium' ;
+    font-family: 'Oxanium';
 }
+
 @media screen and (min-width: 0px) and (max-width: 767px) {
-    .left-side{     
+    .left-side {
         height: 40%;
     }
 
-    .right-side{
-        height: 60%; 
+    .right-side {
+        height: 60%;
     }
 
-    .body-login{
-        background: linear-gradient(to  top,#D62828,#E6C229);
+    .body-login {
+        background: linear-gradient(to top, #D62828, #E6C229);
         height: 100%;
-        background: rgb(2,0,36);
-        background: linear-gradient(90deg,#D62828 0%, #E6C229 50%, #D62828 100%); 
+        background: rgb(2, 0, 36);
+        background: linear-gradient(90deg, #D62828 0%, #E6C229 50%, #D62828 100%);
     }
-  }
-  
+}
+
 @media screen and (min-width: 768px) {
-    .left-side{
+    .left-side {
         height: 100%;
     }
-    .right-side{
-       /* background-color:#f77f00;*/
-        height: 100%; 
+
+    .right-side {
+        /* background-color:#f77f00;*/
+        height: 100%;
     }
-    .body-login{
-        background: linear-gradient(to left top,#D62828,#E6C229);
+
+    .body-login {
+        background: linear-gradient(to left top, #D62828, #E6C229);
         height: 100%;
         background-repeat: no-repeat;
         background-size: cover;
     }
-  }
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+
+body {
+    font-family: Roboto, sans-serif;
+}
+
+#chart {
+    max-width: 650px;
+    margin: 35px auto;
+}
