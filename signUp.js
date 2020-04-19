@@ -4,8 +4,7 @@ $("#registrarme").click(function() {
         let email = $("#Email").val();
         firebase.auth().fetchSignInMethodsForEmail(email).then(function(signInMethods) {
             if (signInMethods.length<=0){
-                let password=$(".passwd")[0].value;
-                
+                let password=$(".passwd")[0].value;    
                 firebase.auth().createUserWithEmailAndPassword(email,password).catch(function(error) {
                     var errorCode = error.code;
                     var errorMessage = error.message;
@@ -14,8 +13,8 @@ $("#registrarme").click(function() {
                     } else {
                       alert(errorMessage);
                     }
-                    console.log(error);
-                }).then(authAndDB(email,password));
+                    console.log("ERROR"+error);
+                });
             }else{
                 Swal.fire({
                     icon:  'error',
@@ -38,36 +37,42 @@ $("#registrarme").click(function() {
     }
 });
 
-function authAndDB(email,password){
-
-    firebase.auth().signInWithEmailAndPassword(email, password).catch(function(error) {
-        var errorCode = error.code;
-        var errorMessage = error.message;7
-        console.log(errorCode);
-        console.log(errorMessage);
-    });
-    firebase.auth().onAuthStateChanged(function(user) {
-        firebase.auth().currentUser.getIdToken().then(function(idToken) {
-            localStorage.auth = idToken;
-            localStorage.uid = firebase.auth().currentUser.uid;
-            uid = firebase.auth().currentUser.uid;
-        });
-    })
-    Empresas = firebase.database().ref('Empresas');
-            Empresas.push().set({
-                "uid": localStorage.uid,
-                "Nombre": $("#empresa").val(),
-                "representante" :$("#replegal").val(),
-                "tipo_documento" : $("#tipo").val() ,
-                "numero_doc": $("#Iddoc").val(),
-                "Correo":email,
-                "Imagen":"NA",
-                "Teléfono":$("#telefono").val()
-            });
-    Swal.fire({
-        icon:  'success',
-        title: 'Su empresa ha sido registrada',
-    }).then(function() {
-        window.location = "operador.html";
-    });
+function DBRegistrer(email){
+    console.log("XXXXXXXXXXXXXXXXX");
+    empresa = firebase.database().ref('Empresas/'+localStorage.uid)
+    empresa.set({
+            "Correo":email,
+            "Nombre": $("#empresa").val(),
+            "representante" :$("#replegal").val(),
+            "tipo_documento" : $("#tipo").val() ,
+            "numero_doc": $("#Iddoc").val(),
+            "Imagen":"NA",
+            "Teléfono":$("#telefono").val(),
+            "Empleados":{}
+    }).then(
+            Swal.fire({
+                icon:  'success',
+                title: 'Su empresa ha sido registrada',
+            })
+    )
 }
+
+function createEmployee(){
+    empleados = firebase.database().ref('Empleados');
+    empresa.set({
+            "Correo":email,
+            "Nombre": 'icelacreyo',
+            'foto':'NA',
+            'direccion':'-----',
+    }).then(
+            Swal.fire({
+                icon:  'success',
+                title: 'El empleado ha sido registrada',
+            })
+    )
+}
+function deleteEmployee(){
+
+}
+
+function updateEmployee(){}

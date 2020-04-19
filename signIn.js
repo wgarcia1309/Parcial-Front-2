@@ -1,5 +1,4 @@
 $("#login").click(function() {
-    event.preventDefault();
      username = $("#username").val();
      password = $("#password").val();
      firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error) {
@@ -8,6 +7,8 @@ $("#login").click(function() {
         console.log(errorCode);
         console.log(errorMessage);
     });
+
+    event.preventDefault();
     firebase.auth().onAuthStateChanged(function(user) {
         if (user) {
             firebase.auth().currentUser.getIdToken().then(function(idToken) {
