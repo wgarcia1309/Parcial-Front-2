@@ -77,6 +77,13 @@ li {
     right: 0px;
 }
 
+.alinear2 {
+    margin-right: 15px;
+    position: absolute;
+    top: 110px;
+    right: 0px;
+}
+
 .answers {
     text-align: justify;
 }

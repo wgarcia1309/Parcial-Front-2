@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/styles.css">
+    <title>Parcia-2 FrontEnd</title>
+</head>
+
+<body class="body-color">
+    <!--Nav section-->
+    <nav class="navbar navbar-expand-lg navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">
+            <img src="image/logo.svg" width="32" height="32" alt="">
+        </a>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse " id="navbarNav">
+            <ul class="navbar-nav text-right">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">Inicio </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/registro.html">Registrate <span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="center-section ml-3 mr-3">
+        <div class="questions-bg mt-2 mb-3 p-3 shadow-lg">
+            <form action="#" method="post">
+                <div class="form-group">
+                    <h2>Nuevo Questionario</h2>
+                    <h4>Pregunta #1</h4>
+                    <input type="text" class="form-control" id="pregunta1" placeholder="Pregunta #1">
+                    <h6>Opción correcta</h6>
+                    <input type="text" class="form-control" id="correcta1" placeholder="Opción correcta">
+                    <h6>Opciones incorrectas</h6>
+                    <div class="input-group mt-3">
+                        <input type="text" class="form-control" id="incorrecta11" placeholder="Opción incorrecta">
+                        <input type="text" class="form-control" id="incorrecta12" placeholder="Opción incorrecta">
+                        <input type="text" class="form-control" id="incorrecta13" placeholder="Opción incorrecta">
+                    </div>
+                    <h4>Pregunta #2</h4>
+                    <input type="text" class="form-control" id="pregunta2" placeholder="Pregunta #2">
+                    <h6>Opción correcta</h6>
+                    <input type="text" class="form-control" id="correcta2" placeholder="Opción correcta">
+                    <h6>Opciones incorrectas</h6>
+                    <div class="input-group mt-3">
+                        <input type="text" class="form-control" id="incorrecta21" placeholder="Opción incorrecta">
+                        <input type="text" class="form-control" id="incorrecta22" placeholder="Opción incorrecta">
+                        <input type="text" class="form-control" id="incorrecta23" placeholder="Opción incorrecta">
+                    </div>
+                    <h4>Pregunta #3</h4>
+                    <input type="text" class="form-control" id="pregunta3" placeholder="Pregunta #3">
+                    <h6>Opción correcta</h6>
+                    <input type="text" class="form-control" id="correcta3" placeholder="Opción correcta">
+                    <h6>Opciones incorrectas</h6>
+                    <div class="input-group mt-3">
+                        <input type="text" class="form-control" id="incorrecta31" placeholder="Opción incorrecta">
+                        <input type="text" class="form-control" id="incorrecta32" placeholder="Opción incorrecta">
+                        <input type="text" class="form-control" id="incorrecta33" placeholder="Opción incorrecta">
+                    </div>
+                    <h4>Pregunta #4</h4>
+                    <input type="text" class="form-control" id="pregunta4" placeholder="Pregunta #4">
+                    <h6>Opción correcta</h6>
+                    <input type="text" class="form-control" id="correcta4" placeholder="Opción correcta">
+                    <h6>Opciones incorrectas</h6>
+                    <div class="input-group mt-3">
+                        <input type="text" class="form-control" id="incorrecta41" placeholder="Opción incorrecta">
+                        <input type="text" class="form-control" id="incorrecta42" placeholder="Opción incorrecta">
+                        <input type="text" class="form-control" id="incorrecta43" placeholder="Opción incorrecta">
+                    </div>
+                    <h4>Pregunta #5</h4>
+                    <input type="text" class="form-control" id="pregunta5" placeholder="Pregunta #5">
+                    <h6>Opción correcta</h6>
+                    <input type="text" class="form-control" id="correcta5" placeholder="Opción correcta">
+                    <h6>Opciones incorrectas</h6>
+                    <div class="input-group mt-3">
+                        <input type="text" class="form-control" id="incorrecta51" placeholder="Opción incorrecta">
+                        <input type="text" class="form-control" id="incorrecta52" placeholder="Opción incorrecta">
+                        <input type="text" class="form-control" id="incorrecta53" placeholder="Opción incorrecta">
+                    </div>
+                    <button type="submit" id="registrarCuestionario"
+                        class="btn btn-dark btn-lg shadow-lg btn-block mt-2">Registrar Cuestionario</button>
+                    <p class="text-muted"> Todos los datos son necesarios para el registro</p>
+            </form>
+        </div>
+    </section>
+
+    <!--
+        <div>Iconos diseñados por <a href="https://www.flaticon.es/autores/monkik" title="monkik">monkik</a> from <a href="https://www.flaticon.es/" title="Flaticon">www.flaticon.es</a></div>
+    -->
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+
+    <!--sweetAlert2-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+           https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
+    <script src="configuration.js"></script>
+    <script src="enterprise.js"></script>
+</body>
+
+</html>
