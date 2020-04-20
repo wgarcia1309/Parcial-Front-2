@@ -1,11 +1,12 @@
 var empresa = firebase.database().ref('Empresas/' + localStorage.uid);
-/*vincular con el html*/
-empresa.once('value')
+function myProfile(){
+  empresa.once('value')
   .then(function (snapshot) {
     console.log(snapshot.val())
   });
+}
 
-$("#registrarCuestionario").click(createQuestions()).then(
+$('#registrarCuestionario').click(createQuestions()).then(
     Swal.fire({
       icon: 'success',
       title: 'Su cuestionario ha sido creado',
@@ -13,8 +14,8 @@ $("#registrarCuestionario").click(createQuestions()).then(
   );
 
 
-function removeEmployeeAnswer(Employeeuid){
-  firebase.database().ref("/Empleados/"+Employeeuid+'/Cuestionario').remove().then(()=>{
+function removeEmployeeAnswer(employeeuid){
+  firebase.database().ref('/Empleados/'+employeeuid+'/Cuestionario').remove().then(()=>{
     Swal.fire({
       icon:  'success',
       title: 'Respuesta eliminada',
@@ -23,7 +24,7 @@ function removeEmployeeAnswer(Employeeuid){
 }
 
 function removeQuestions(Empresauid){
-  firebase.database().ref("/Empresas/"+Empresauid+'/cuestionario').remove().then(()=>{
+  firebase.database().ref('/Empresas/'+Empresauid+'/cuestionario').remove().then(()=>{
     Swal.fire({
       icon:  'success',
       title: 'Cuestionario eliminado',
@@ -65,4 +66,75 @@ function createQuestions() {
       'respuesta': $('#correcta5').val()
     }
   });
+}
+
+function CreateEmployee(correo,password){
+  secondaryApp.auth().createUserWithEmailAndPassword(correo, password);
+}
+
+
+
+function DBERegistrer(employeeuid){
+  Empleados = firebase.database().ref('Empleados/'+employeeuid);
+  Empleados.set({
+          'Empresa':localStorage.uid,
+          'estado': true,
+          'direccion' :'dddddddddd',
+          'foto':'dddddddddd'
+  }).then(()=>{
+    firebase.database().ref('Empresas/'+localStorage.uid+'/Empleados/').push().set({
+      'user_id': employeeuid,
+    }).then(()=>{
+          Swal.fire({
+              icon:  'success',
+              title: 'El empleado ha sido registrado',
+          })
+        })
+  })
+}
+
+function removeEmployee(employeeuid){
+
+
+  firebase.database().ref('/Empleados/'+employeeuid).remove().then(()=>{
+    key=firebase.database().ref('/Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).key
+    firebase.database().ref('/Empresas/'+localStorage.uid+'/Empleados/'+employeeuid+'/'+key).remove().then(
+    ()=>{
+      Swal.fire({
+        icon:  'success',
+        title: 'Empleado eliminado',
+      })
+    });
+
+    
+  
+})
+}
+
+
+function seeEmployeeProfile(employeeuid){
+  firebase.database().ref('/Empleados/'+employeeuid).once('value')
+  .then(function (snapshot) {
+    console.log(snapshot.val())
+  });
+}
+
+function updateEmployee(employeeuid){
+  firebase.database().ref('/Empleados/'+employeeuid).update({
+    'direccion':'avenidas siempre viva'
+  }).then(
+    Swal.fire({
+      icon:  'success',
+      title: 'Datos del empleado actualizados',
+  })
+  );
+}
+
+
+function enableEmployee(){
+}
+
+function disableEmployee(){
+
+
 }

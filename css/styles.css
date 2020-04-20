@@ -94,7 +94,7 @@ li {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
-    
+    height: calc(100vh - 80px);
 } 
 
 .center-chart {
