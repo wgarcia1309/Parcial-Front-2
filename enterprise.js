@@ -5,8 +5,33 @@ empresa.once('value')
     console.log(snapshot.val())
   });
 
-/**/
-$("#registrarCuestionario").click(function createQuestions() {
+$("#registrarCuestionario").click(createQuestions()).then(
+    Swal.fire({
+      icon: 'success',
+      title: 'Su cuestionario ha sido creado',
+    })
+  );
+
+
+function removeEmployeeAnswer(Employeeuid){
+  firebase.database().ref("/Empleados/"+Employeeuid+'/Cuestionario').remove().then(()=>{
+    Swal.fire({
+      icon:  'success',
+      title: 'Respuesta eliminada',
+  })
+});
+}
+
+function removeQuestions(Empresauid){
+  firebase.database().ref("/Empresas/"+Empresauid+'/cuestionario').remove().then(()=>{
+    Swal.fire({
+      icon:  'success',
+      title: 'Cuestionario eliminado',
+  })
+});
+}
+
+function createQuestions() {
   cuestionario = firebase.database().ref('Empresas/' + localStorage.uid + '/cuestionario')
   cuestionario.set({
     'Pregunta 1': {
@@ -39,11 +64,5 @@ $("#registrarCuestionario").click(function createQuestions() {
       'opciones': [$('#correcta5').val(), $('#incorrecta51').val(), $('#incorrecta52').val(), $('#incorrecta53').val()],
       'respuesta': $('#correcta5').val()
     }
-  }).then(
-    Swal.fire({
-      icon: 'success',
-      title: 'Su cuestionario ha sido creado',
-    })
-  )
-});
-
+  });
+}

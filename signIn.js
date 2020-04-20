@@ -19,7 +19,7 @@ function getError(code){
 
 const errors={
         'auth/user-not-found' :'Usuario y/o contraseña incorrectos',
-        'wrong-password' :'Usuario y/o contraseña incorrectos',
+        'auth/wrong-password' :'Usuario y/o contraseña incorrectos',
         'auth/invalid-email': 'Correo invalido',
         'auth/user-disabled': 'Usuario desahabilitado'
     }
