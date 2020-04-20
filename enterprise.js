@@ -69,12 +69,14 @@ function createQuestions() {
 }
 
 function createEmployee(correo,password){
+  localStorage.pwd=password;
+  localStorage.state="CREATE";
   secondaryApp.auth().createUserWithEmailAndPassword(correo, password);
 }
 
 
 
-function DBERegistrer(employeeuid){
+function DBERegistrer(employeeuid,email){
   Empleados = firebase.database().ref('Empleados/'+employeeuid);
   Empleados.set({
           'Empresa':localStorage.uid,
@@ -83,8 +85,10 @@ function DBERegistrer(employeeuid){
           'foto':'dddddddddd'
   }).then(()=>{
     firebase.database().ref('Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).set({
-      'trash':''
+      'correo':email,
+      'password':localStorage.pwd
     }).then(()=>{
+          localStorage.pwd="";
           Swal.fire({
               icon:  'success',
               title: 'El empleado ha sido registrado',
@@ -95,17 +99,24 @@ function DBERegistrer(employeeuid){
 
 
 function removeEmployee(employeeuid){
+  localStorage.state="DELETE"
   firebase.database().ref('/Empleados/'+employeeuid).remove().then(()=>{
-    db=firebase.database().ref('/Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).remove().then(
-    ()=>{
-        Swal.fire({
-          icon:  'success',
-          title: 'Empleado eliminado',
-        })
-    }); 
-  })
+    firebase.database().ref('/Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).once('value').then(function (snapshot) {
+      let email=snapshot.child('correo').val()
+      let pwd=snapshot.child('password').val()
+      firebase.database().ref('/Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).remove().then(()=>{
+        secondaryApp.auth().signInWithEmailAndPassword(email,pwd).then(()=>{
+          secondaryApp.auth().currentUser.delete().then(()=>{
+            Swal.fire({
+              icon:  'success',
+              title: 'Empleado eliminado',
+            })
+          });
+        });
+      });
+    })
+  });
 }
-
 
 function seeEmployeeProfile(employeeuid){
   firebase.database().ref('/Empleados/'+employeeuid).once('value')
