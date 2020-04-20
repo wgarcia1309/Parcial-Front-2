@@ -126,21 +126,52 @@ function seeEmployeeProfile(employeeuid){
 }
 
 function updateEmployee(employeeuid){
+  changepassword=true;
   firebase.database().ref('/Empleados/'+employeeuid).update({
     'direccion':'avenidas siempre viva'
-  }).then(
-    Swal.fire({
-      icon:  'success',
-      title: 'Datos del empleado actualizados',
-  })
-  );
+  }).then(()=>{
+    if(changepassword){
+      localStorage.state="UPDATE";
+      firebase.database().ref('/Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).once('value').then(function (snapshot) {
+        let email=snapshot.child('correo').val();
+        let pwd=snapshot.child('password').val();
+        secondaryApp.auth().signInWithEmailAndPassword(email,pwd).then(()=>{
+          newpwd="654321"
+          secondaryApp.auth().currentUser.updatePassword(newpwd).then(function() {
+            firebase.database().ref('/Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).update({
+              'password':newpwd
+            }).then(Swal.fire({
+              icon:  'success',
+             title: 'Datos del empleado actualizados',
+            }));
+          }).catch(function(error) {
+          //update passerrors
+          // An error happened.
+          });
+        }).catch(function(error) {
+        //login errors
+        });
+    });
+  }
+})
 }
 
 
-function enableEmployee(){
+function enableEmployee(employeeuid){
+  firebase.database().ref('/Empleados/'+employeeuid).update({
+    'estado':true
+  }).then(swal.fire({
+    icon:'success',
+    title:'Usuario habilitado'
+  }));
 }
 
-function disableEmployee(){
-
+function disableEmployee(employeeuid){
+  firebase.database().ref('/Empleados/'+employeeuid).update({
+    'estado':false
+  }).then(swal.fire({
+    icon:'success',
+    title:'Usuario inhabilitado'
+  }));
 
 }
