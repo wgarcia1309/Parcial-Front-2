@@ -68,7 +68,7 @@ function createQuestions() {
   });
 }
 
-function CreateEmployee(correo,password){
+function createEmployee(correo,password){
   secondaryApp.auth().createUserWithEmailAndPassword(correo, password);
 }
 
@@ -82,8 +82,8 @@ function DBERegistrer(employeeuid){
           'direccion' :'dddddddddd',
           'foto':'dddddddddd'
   }).then(()=>{
-    firebase.database().ref('Empresas/'+localStorage.uid+'/Empleados/').push().set({
-      'user_id': employeeuid,
+    firebase.database().ref('Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).set({
+      'trash':''
     }).then(()=>{
           Swal.fire({
               icon:  'success',
@@ -93,22 +93,17 @@ function DBERegistrer(employeeuid){
   })
 }
 
+
 function removeEmployee(employeeuid){
-
-
   firebase.database().ref('/Empleados/'+employeeuid).remove().then(()=>{
-    key=firebase.database().ref('/Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).key
-    firebase.database().ref('/Empresas/'+localStorage.uid+'/Empleados/'+employeeuid+'/'+key).remove().then(
+    db=firebase.database().ref('/Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).remove().then(
     ()=>{
-      Swal.fire({
-        icon:  'success',
-        title: 'Empleado eliminado',
-      })
-    });
-
-    
-  
-})
+        Swal.fire({
+          icon:  'success',
+          title: 'Empleado eliminado',
+        })
+    }); 
+  })
 }
 
 

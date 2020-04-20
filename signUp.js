@@ -38,7 +38,6 @@ $("#registrarme").click(function() {
 });
 
 function DBRegistrer(email){
-    console.log("XXXXXXXXXXXXXXXXX");
     empresa = firebase.database().ref('Empresas/'+localStorage.uid)
     empresa.set({
             "Correo":email,
