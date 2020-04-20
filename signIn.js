@@ -5,23 +5,21 @@ $("#login").click(function() {
         var errorCode = error.code;
         var errorMessage = error.message;7
         console.log(errorCode);
-        console.log(errorMessage);
+        getError(errorCode);
     });
-
-    event.preventDefault();
-    firebase.auth().onAuthStateChanged(function(user) {
-        if (user) {
-            firebase.auth().currentUser.getIdToken().then(function(idToken) {
-                localStorage.auth = idToken;
-                localStorage.uid = firebase.auth().currentUser.uid;
-                uid = firebase.auth().currentUser.uid;
-            });
-            window.location = "operador.html";
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Usuario y/o contraseña son incorrectos',
-            });
-        }
-    });
+    
 });
+
+function getError(code){
+    return   Swal.fire({
+                        icon: 'error',
+                        title: errors[code],
+                    });
+}
+
+const errors={
+        'auth/user-not-found' :'Usuario y/o contraseña incorrectos',
+        'wrong-password' :'Usuario y/o contraseña incorrectos',
+        'auth/invalid-email': 'Correo invalido',
+        'auth/user-disabled': 'Usuario desahabilitado'
+    }

@@ -43,13 +43,7 @@ empresa.once('value')
       Swal.fire({
           icon:  'success',
           title: 'Su cuestionario ha sido creado',
-      }).then(function() {
-          window.location = "operador.html";
       })
 )
 
-  }
-
-  function disableUser(){
-    
   }

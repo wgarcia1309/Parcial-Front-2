@@ -53,26 +53,8 @@ function DBRegistrer(email){
             Swal.fire({
                 icon:  'success',
                 title: 'Su empresa ha sido registrada',
+            }).then(function() {
+                window.location = "operador.html";
             })
     )
 }
-
-function createEmployee(){
-    empleados = firebase.database().ref('Empleados');
-    empresa.set({
-            "Correo":email,
-            "Nombre": 'icelacreyo',
-            'foto':'NA',
-            'direccion':'-----',
-    }).then(
-            Swal.fire({
-                icon:  'success',
-                title: 'El empleado ha sido registrada',
-            })
-    )
-}
-function deleteEmployee(){
-
-}
-
-function updateEmployee(){}
