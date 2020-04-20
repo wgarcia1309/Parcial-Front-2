@@ -3,7 +3,7 @@ $("#login").click(function() {
      password = $("#password").val();
      firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error) {
         var errorCode = error.code;
-        var errorMessage = error.message;7
+        var errorMessage = error.message;
         console.log(errorCode);
         getError(errorCode);
     });
