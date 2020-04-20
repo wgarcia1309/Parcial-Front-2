@@ -7,7 +7,7 @@ empresa.once('value')
 
   /**/
   function createQuestions() {
-    cuestionario = firebase.database().ref('Empresas/'+localStorage.uid+'/cuestionario')
+    cuestionario = firebase.database().ref('Empresas/'+localStorage.uid+'/Cuestionario')
     cuestionario.set({
       'Pregunta 1':{
                     'enunciado':'Holaaa',
@@ -46,4 +46,22 @@ empresa.once('value')
       })
 )
 
+  }
+
+  function removeEmployeeAnswer(Employeeuid){
+    firebase.database().ref("/Empleados/"+Employeeuid+'/Cuestionario').remove().then(()=>{
+      Swal.fire({
+        icon:  'success',
+        title: 'Respuesta eliminada',
+    })
+  });
+}
+  
+  function removeQuestions(Empresauid){
+    firebase.database().ref("/Empresas/"+Empresauid+'/cuestionario').remove().then(()=>{
+      Swal.fire({
+        icon:  'success',
+        title: 'Cuestionario eliminado',
+    })
+  });
   }
