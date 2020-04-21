@@ -11,6 +11,11 @@ $('#registrarCuestionario').click(function(){
   createQuestions();
 });
 
+$('#crearEmpleado').click(function(){
+  event.preventDefault();
+  createEmployee($('#correo').val(),$('#password').val());
+});
+
 
 function removeEmployeeAnswer(employeeuid) {
   firebase.database().ref('/Empleados/' + employeeuid + '/cuestionario').update({
@@ -85,12 +90,13 @@ function createEmployee(correo, password) {
 
 
 
-function DBERegistrer(employeeuid, email) {
+function DBERegistrer(employeeuid) {
   Empleados = firebase.database().ref('Empleados/' + employeeuid);
   Empleados.set({
+    'nombre': $('#nombreOperador').val(),
     'Empresa': localStorage.uid,
     'estado': true,
-    'direccion': 'dddddddddd',
+    'direccion': $('#direccion').val(),
     'foto': 'dddddddddd',
     'cuestionario':
     {
@@ -98,11 +104,14 @@ function DBERegistrer(employeeuid, email) {
       'Pregunta 2': '',
       'Pregunta 3': '',
       'Pregunta 4': '',
-      'Pregunta 5': ''
+      'Pregunta 5': '',
+      'score': -1,
+      'maxscore': -1,
+      'porcentaje': -1
     }
   }).then(() => {
     firebase.database().ref('Empresas/' + localStorage.uid + '/Empleados/' + employeeuid).set({
-      'correo': email,
+      'correo': $('#correo').val(),
       'password': localStorage.pwd
     }).then(() => {
       localStorage.pwd = "";
@@ -113,7 +122,6 @@ function DBERegistrer(employeeuid, email) {
     })
   })
 }
-
 
 function removeEmployee(employeeuid) {
   localStorage.state = "DELETE"
@@ -173,7 +181,6 @@ function updateEmployee(employeeuid) {
   })
 }
 
-
 function enableEmployee(employeeuid) {
   firebase.database().ref('/Empleados/' + employeeuid).update({
     'estado': true
@@ -190,8 +197,8 @@ function disableEmployee(employeeuid) {
     icon: 'success',
     title: 'Usuario inhabilitado'
   }));
-
 }
+
 /*para todo empleado*/
 function subcribe(employeeuid) {
   firebase.database().ref('/Empleados/' + employeeuid + '/cuestionario').on("value", function (snapshot) {

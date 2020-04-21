@@ -27,7 +27,7 @@
         <div class="collapse navbar-collapse " id="navbarNav">
             <ul class="navbar-nav text-right">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Administración <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="./administracion.html">administracion <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="log-out" href="index.html">Cerrar sesion</a>
@@ -38,7 +38,7 @@
 
     <section class="center-section ml-3 mr-3">
         <div class="questions-bg mt-2 mb-3 p-3 shadow-lg">
-            <form action="" method="post">
+            <form action="" method="">
                 <div class="form-group">
                     <h3>Nuevo Operador</h3>
                     <label for="nombreOperador"></label>
@@ -46,11 +46,12 @@
                     <div class="input-group-prepend">
                     </div>
                 </div>
-                <input type="text" class="form-control" id="direccion" placeholder="Dirección">
-                <input type="file" class="form-control mt-2" placeholder="Perfil svg ">
-                <input type="password" class="form-control mt-2" placeholder="Contraseña">
-                <input type="password" class="form-control mt-2" placeholder="Confirme la contraseña">
-                <button type="submit" class="btn btn-dark btn-lg shadow-lg btn-block mt-2">Registrarse</button>
+                <input type="text" id="direccion" class="form-control" id="direccion" placeholder="Dirección">
+                <input type="file" id="profilephoto" class="form-control mt-2" placeholder="Perfil svg ">
+                <input type="email" id="correo" class="form-control mt-2" placeholder="Correo electronico">
+                <input type="password" id="password" class="form-control mt-2" placeholder="Contraseña">
+                <input type="password" id="passwordconfirm" class="form-control mt-2" placeholder="Confirme la contraseña">
+                <button type="submit" id="crearEmpleado" class="btn btn-dark btn-lg shadow-lg btn-block mt-2">Registrarse</button>
                 <p class="text-muted"> Todos los datos son necesarios para el registro</p>
             </form>
         </div>
@@ -81,6 +82,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
     <script src="configuration.js"></script>
+    <script src="enterprise.js"></script>
     <script src="logout.js"></script>
 </body>
 

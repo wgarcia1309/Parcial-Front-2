@@ -53,7 +53,7 @@ function DBRegistrer(email){
                 icon:  'success',
                 title: 'Su empresa ha sido registrada',
             }).then(function() {
-                window.location = "administración.html";
+                window.location = "administracion.html";
             })
     )
 }

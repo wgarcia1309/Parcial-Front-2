@@ -7,7 +7,7 @@ $('#enviarCuestionario').click(function () {
 });
 
 function sendAnswers(EmployeeUID) {
-  firebase.database().ref('/Empleados/' + EmployeeUID + '/cuestionario').set({
+  firebase.database().ref('/Empleados/' + EmployeeUID + '/cuestionario').update({
     'Pregunta 1': {
       'respuesta': $("input[name='q-1']:checked").val()
     },
@@ -23,43 +23,39 @@ function sendAnswers(EmployeeUID) {
     'Pregunta 5': {
       'respuesta': $("input[name='q-5']:checked").val()
     }
-  }).then(() => {
-    Swal.fire({
-      icon: 'success',
-      title: 'Respuestas enviadas',
-    })
-  })
+  });
 }
 
 function getPoints(empleadouid) {
 
   firebase.database().ref('/Empleados/' + empleadouid).once('value').then(function (snapshot) {
-    console.log(snapshot.child('/cuestionario').val());
     respuestasuser = snapshot.child('/cuestionario').val();
     firebase.database().ref('/Empresas/' + snapshot.child('/Empresa').val()).once('value').then(function (snapshot2) {
-      console.log(
-        snapshot2.val()
-      );
-      respuestasEmpresas = snapshot2.child('/Cuestionario').val();
+      respuestasEmpresas = snapshot2.child('/cuestionario').val();
     }).then(() => {
-
-      {
-        MaxScore = 0;
-        score = 0;
-        for (let i = 1; i <= 5; i++) {
-          if (respuestasuser['Pregunta ' + i]['respuesta'] === respuestasEmpresas['Pregunta ' + i]['respuesta']) {
-            score += respuestasEmpresas['Pregunta ' + i]['valor'];
-          }
-          MaxScore += respuestasEmpresas['Pregunta ' + i]['valor'];
+      MaxScore = 0;
+      score = 0;
+      for (let i = 1; i <= 5; i++) {
+        if (respuestasuser[`Pregunta ${i}`][`respuesta`] === respuestasEmpresas[`Pregunta ${i}`][`respuesta`]) {
+          score += parseFloat(respuestasEmpresas[`Pregunta ${i}`][`valor`]);
         }
-        console.log(score);
-        console.log(score / MaxScore * 100 + '%');
+        MaxScore += parseFloat(respuestasEmpresas[`Pregunta ${i}`][`valor`]);
       }
-
+      porcentaje = ((score / MaxScore) * 100).toFixed(2);
+      firebase.database().ref('/Empleados/' + empleadouid + '/cuestionario/').update({
+        'puntaje': score,
+        'maxscore': MaxScore,
+        'porcentaje': porcentaje,
+      }).then(() => {
+        Swal.fire({
+          icon: 'success',
+          title: 'Respuestas enviadas',
+        });
+      }).then(() => {
+        window.location = 'resultados.html';
+      });
     });
   });
-
-
 }
 
 function subscribe() {
