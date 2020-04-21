@@ -15,7 +15,13 @@ $('#registrarCuestionario').click(createQuestions()).then(
 
 
 function removeEmployeeAnswer(employeeuid){
-  firebase.database().ref('/Empleados/'+employeeuid+'/Cuestionario').remove().then(()=>{
+  firebase.database().ref('/Empleados/'+employeeuid+'/cuestionario').update({
+    'Pregunta 1':'',
+    'Pregunta 2':'',
+    'Pregunta 3':'',
+    'Pregunta 4':'',
+    'Pregunta 5':''
+  }).then(()=>{
     Swal.fire({
       icon:  'success',
       title: 'Respuesta eliminada',
@@ -82,7 +88,15 @@ function DBERegistrer(employeeuid,email){
           'Empresa':localStorage.uid,
           'estado': true,
           'direccion' :'dddddddddd',
-          'foto':'dddddddddd'
+          'foto':'dddddddddd',
+          'cuestionario': 
+                          {
+                            'Pregunta 1':'',
+                            'Pregunta 2':'',
+                            'Pregunta 3':'',
+                            'Pregunta 4':'',
+                            'Pregunta 5':''
+                          }
   }).then(()=>{
     firebase.database().ref('Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).set({
       'correo':email,
@@ -174,4 +188,14 @@ function disableEmployee(employeeuid){
     title:'Usuario inhabilitado'
   }));
 
+}
+/*para todo empleado*/
+function subcribe(employeeuid){
+ firebase.database().ref('/Empleados/'+employeeuid+'/cuestionario').on("value", function(snapshot) {
+  console.log(snapshot.child('Pregunta 1').val()) 
+   if(!(snapshot.child('Pregunta 1').val()==='')){
+     /*definir mensaje */ 
+    console.log(snapshot.child('Pregunta 1').val()) 
+   }
+ });
 }

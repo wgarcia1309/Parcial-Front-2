@@ -1,5 +1,7 @@
+subscribe()
+
 function sendAnswers(EmployeeUID){
-    firebase.database().ref('/Empleados/'+EmployeeUID+'/Cuestionario').set({
+    firebase.database().ref('/Empleados/'+EmployeeUID+'/cuestionario').set({
         'Pregunta 1':{
                       'respuesta':'a'
                     },
@@ -16,14 +18,11 @@ function sendAnswers(EmployeeUID){
                       'respuesta':'a'
                     }
       }).then(()=>{
-        then(()=>{
             Swal.fire({
               icon:  'success',
               title: 'Respuestas enviadas',
           })
         })
-      }
-      )
 }
 
 function getPoints(empleadouid){
@@ -56,3 +55,13 @@ function getPoints(empleadouid){
 
     
 }
+
+function subscribe(){
+  firebase.database().ref('/Empleados/'+localStorage.uid+'/cuestionario').on("value", function(snapshot) {
+    if(!(snapshot.child('Pregunta 1').val()==='')){
+      firebase.database().ref('Empresas/'+localStorage.empresauid+'/Historial/'+localStorage.uid).set(
+        snapshot.val()
+      );
+    }
+  });
+ }
