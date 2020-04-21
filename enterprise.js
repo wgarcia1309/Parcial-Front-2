@@ -15,7 +15,13 @@ $('#registrarCuestionario').click(createQuestions()).then(
 
 
 function removeEmployeeAnswer(employeeuid){
-  firebase.database().ref('/Empleados/'+employeeuid+'/Cuestionario').remove().then(()=>{
+  firebase.database().ref('/Empleados/'+employeeuid+'/cuestionario').update({
+    'Pregunta 1':'',
+    'Pregunta 2':'',
+    'Pregunta 3':'',
+    'Pregunta 4':'',
+    'Pregunta 5':''
+  }).then(()=>{
     Swal.fire({
       icon:  'success',
       title: 'Respuesta eliminada',
@@ -69,22 +75,34 @@ function createQuestions() {
 }
 
 function createEmployee(correo,password){
+  localStorage.pwd=password;
+  localStorage.state="CREATE";
   secondaryApp.auth().createUserWithEmailAndPassword(correo, password);
 }
 
 
 
-function DBERegistrer(employeeuid){
+function DBERegistrer(employeeuid,email){
   Empleados = firebase.database().ref('Empleados/'+employeeuid);
   Empleados.set({
           'Empresa':localStorage.uid,
           'estado': true,
           'direccion' :'dddddddddd',
-          'foto':'dddddddddd'
+          'foto':'dddddddddd',
+          'cuestionario': 
+                          {
+                            'Pregunta 1':'',
+                            'Pregunta 2':'',
+                            'Pregunta 3':'',
+                            'Pregunta 4':'',
+                            'Pregunta 5':''
+                          }
   }).then(()=>{
     firebase.database().ref('Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).set({
-      'trash':''
+      'correo':email,
+      'password':localStorage.pwd
     }).then(()=>{
+          localStorage.pwd="";
           Swal.fire({
               icon:  'success',
               title: 'El empleado ha sido registrado',
@@ -95,17 +113,24 @@ function DBERegistrer(employeeuid){
 
 
 function removeEmployee(employeeuid){
+  localStorage.state="DELETE"
   firebase.database().ref('/Empleados/'+employeeuid).remove().then(()=>{
-    db=firebase.database().ref('/Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).remove().then(
-    ()=>{
-        Swal.fire({
-          icon:  'success',
-          title: 'Empleado eliminado',
-        })
-    }); 
-  })
+    firebase.database().ref('/Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).once('value').then(function (snapshot) {
+      let email=snapshot.child('correo').val()
+      let pwd=snapshot.child('password').val()
+      firebase.database().ref('/Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).remove().then(()=>{
+        secondaryApp.auth().signInWithEmailAndPassword(email,pwd).then(()=>{
+          secondaryApp.auth().currentUser.delete().then(()=>{
+            Swal.fire({
+              icon:  'success',
+              title: 'Empleado eliminado',
+            })
+          });
+        });
+      });
+    })
+  });
 }
-
 
 function seeEmployeeProfile(employeeuid){
   firebase.database().ref('/Empleados/'+employeeuid).once('value')
@@ -115,21 +140,62 @@ function seeEmployeeProfile(employeeuid){
 }
 
 function updateEmployee(employeeuid){
+  changepassword=true;
   firebase.database().ref('/Empleados/'+employeeuid).update({
     'direccion':'avenidas siempre viva'
-  }).then(
-    Swal.fire({
-      icon:  'success',
-      title: 'Datos del empleado actualizados',
-  })
-  );
+  }).then(()=>{
+    if(changepassword){
+      localStorage.state="UPDATE";
+      firebase.database().ref('/Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).once('value').then(function (snapshot) {
+        let email=snapshot.child('correo').val();
+        let pwd=snapshot.child('password').val();
+        secondaryApp.auth().signInWithEmailAndPassword(email,pwd).then(()=>{
+          newpwd="654321"
+          secondaryApp.auth().currentUser.updatePassword(newpwd).then(function() {
+            firebase.database().ref('/Empresas/'+localStorage.uid+'/Empleados/'+employeeuid).update({
+              'password':newpwd
+            }).then(Swal.fire({
+              icon:  'success',
+             title: 'Datos del empleado actualizados',
+            }));
+          }).catch(function(error) {
+          //update passerrors
+          // An error happened.
+          });
+        }).catch(function(error) {
+        //login errors
+        });
+    });
+  }
+})
 }
 
 
-function enableEmployee(){
+function enableEmployee(employeeuid){
+  firebase.database().ref('/Empleados/'+employeeuid).update({
+    'estado':true
+  }).then(swal.fire({
+    icon:'success',
+    title:'Usuario habilitado'
+  }));
 }
 
-function disableEmployee(){
+function disableEmployee(employeeuid){
+  firebase.database().ref('/Empleados/'+employeeuid).update({
+    'estado':false
+  }).then(swal.fire({
+    icon:'success',
+    title:'Usuario inhabilitado'
+  }));
 
-
+}
+/*para todo empleado*/
+function subcribe(employeeuid){
+ firebase.database().ref('/Empleados/'+employeeuid+'/cuestionario').on("value", function(snapshot) {
+  console.log(snapshot.child('Pregunta 1').val()) 
+   if(!(snapshot.child('Pregunta 1').val()==='')){
+     /*definir mensaje */ 
+    console.log(snapshot.child('Pregunta 1').val()) 
+   }
+ });
 }
