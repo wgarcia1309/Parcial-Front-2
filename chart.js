@@ -1,16 +1,24 @@
-var options = {
-    chart: {
-        type: 'line'
-    },
-    series: [{
-        name: 'Puntaje',
-        data: [3, 4, 2, 4, 1, 5, 5, 4, 2]
-    }],
-    xaxis: {
-        categories: ['Op1', 'Op2', 'Op3', 'Op4', 'Op5', 'Op6', 'Op7', 'Op8', 'Op9']
-    }
-}
+firebase.database().ref('/Empleados/' + localStorage.uid).once('value', function (snapshot) {
+    var puntos = parseInt(snapshot.child('/cuestionario/score').val());
+    var maxscore = parseInt(snapshot.child('/cuestionario/maxscore').val())
+    new Chart(document.getElementById("chart"), {
+        type: 'doughnut',
+        data: {
+            labels: ["Puntaje Correcto", "Puntaje Incorrecto"],
+            datasets: [
+                {
+                    label: "puntaje (millions)",
+                    backgroundColor: ["#3e95cd", "#8e5ea2"],
+                    data: [puntos, maxscore-puntos]
+                }
+            ]
 
-var chart = new ApexCharts(document.querySelector("#chart"), options);
-
-chart.render();
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Resultado Operador'
+            }
+        }
+    });
+});
