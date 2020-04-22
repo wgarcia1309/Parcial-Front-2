@@ -14,26 +14,15 @@ function insertEmployees() {
     firebase.database().ref('/Empresas/' + localStorage.uid + '/Empleados').once('value', function (snapshot) {
         var empleados = Object.getOwnPropertyNames(snapshot.val());
         empleados.forEach((empleado, idx) => {
-            notificaciones = "";
             firebase.database().ref('/Empleados/' + empleado).once('value', function (snapshot) {
                 // Create card element
                 const card = document.createElement('div');
                 card.classList = 'card-body';
                 // Construct card content
-                var restante = 100 - snapshot.child('/cuestionario/porcentaje').val();
+
                 var estado = snapshot.child('estado').val() ? "Deshabilitar" : "Habilitar";
                 var hide = snapshot.child('cuestionario/Pregunta 1').val() === "" ? "d-none" : "";
-                const graficos = `
-            <h6>${snapshot.child('/cuestionario/puntaje').val()}/${snapshot.child('/cuestionario/maxscore').val()}
-            </h6>
-            <div class="progress mb-3">
-                <div id="progress" class="progress-bar bg-dark progress-bar-striped" role="progressbar"
-                    style="width: ${snapshot.child('/cuestionario/porcentaje').val()}%" aria-valuemin="0"
-                    aria-valuemax="100"></div>
-                <div id="progress2" class="progress-bar bg-warning" role="progressbar"
-                    style="width: ${restante}%" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
-            `;
+
                 const content = `
             <div id="user-${empleado}">
                 <div class="card mb-12 shadow" style="max-width: 540px;">
@@ -48,7 +37,10 @@ function insertEmployees() {
                                 <div>
                                     <div id="en-${empleado}" class="btn btn-dark shadow enable">${estado}</div>
                                     <div id="rmq-${empleado}" class="btn btn-dark shadow deleteqtn ">Eliminar Evaluacion</div>
-                                    <div id="eval-${empleado}" class="btn btn-dark shadow showqtn ">Ver Evaluacion</div>
+                                    <!-- Button trigger modal -->
+                                    <div id="eval-${empleado}" class="btn btn-dark showqtn"> 
+                                    Ver Evaluacion
+                                    </div>
                                     <a href="actualizar.html" id="act-${empleado}"class="btn btn-dark shadow update">Actualizar información</a>
                                     <div id="del-${empleado}" class="btn btn-dark shadow delEmp">Eliminar empleado</a>
                                 </div>
@@ -58,17 +50,13 @@ function insertEmployees() {
                 </div>
             </div>
 `;
-
                 nombres[empleado] = snapshot.child('/nombre').val();
                 first[empleado] = true;
-                notificaciones += `
-            <div id="${empleado}-${snapshot.child('/nombre').val()}" class="notify">
-            </div>`
+              
                 subscribe(empleado)
                 // Append newyly created card element to the container
                 container.innerHTML += content;
             }).then(() => {
-                container.innerHTML += notificaciones;
                 $('.enable').click(function (event) {
                     let target = $(event.target);
                     target.addClass('disabled');
@@ -93,7 +81,8 @@ function insertEmployees() {
                 /*modal */
                 $(".showqtn").click(function (event) {
                     let target = $(event.target);
-                    let uid = target.attr("id").substring(5);
+                    localStorage.employeeuid = target.attr("id").substring(5);
+                    window.location="viewscore.html"
                 })
                 $(".delEmp").click(function (event) {
                     let target = $(event.target);
@@ -118,11 +107,10 @@ function subscribe(employeeuid) {
             $('#eval-' + employeeuid).addClass('d-none');
         } else {
             if (first[employeeuid]) {
-                first[employeeuid] = !first[employeeuid];
-            } else {
+                first[employeeuid] = false;
+            }else{
                 $("#navbarNav").notify(nombres[employeeuid] + " ha realizado una encuesta", { position: "bottom", className: "info" });
             }
-
             $('#rmq-' + employeeuid).removeClass('d-none');
             $('#eval-' + employeeuid).removeClass('d-none');
         }
