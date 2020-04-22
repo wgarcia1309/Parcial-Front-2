@@ -84,6 +84,12 @@ li {
     right: 0px;
 }
 
+.alinear3 {
+    margin-right: 15px;
+    position: absolute;
+    top: 160px;
+    right: 0px;
+}
 .answers {
     text-align: justify;
 }

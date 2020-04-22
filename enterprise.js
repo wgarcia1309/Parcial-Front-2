@@ -16,6 +16,11 @@ $('#crearEmpleado').click(function () {
   createEmployee($('#correo').val(), $('#password').val());
 });
 
+$('#removequestions').click(function(){
+  event.preventDefault();
+  removeQuestions(localStorage.uid);
+})
+
 $('#actualizarEmpleado').click(function () {
   event.preventDefault();
   updateEmployee(sessionStorage.getItem("empleadotoupdate"));
@@ -29,19 +34,29 @@ function removeEmployeeAnswer(employeeuid) {
     'Pregunta 4': '',
     'Pregunta 5': ''
   }).then(() => {
-    Swal.fire({
-      icon: 'success',
-      title: 'Respuesta eliminada',
-    })
+    if(localStorage.status==="INDIVIDUAL"){
+      Swal.fire({
+        icon: 'success',
+        title: 'Respuesta eliminada',
+      })
+    }
+    localStorage.status=""
   });
 }
 
 function removeQuestions(Empresauid) {
   firebase.database().ref('/Empresas/' + Empresauid + '/cuestionario').remove().then(() => {
-    Swal.fire({
-      icon: 'success',
-      title: 'Cuestionario eliminado',
-    })
+    firebase.database().ref('/Empresas/' + localStorage.uid + '/Empleados').once('value', function (snapshot) {
+      var empleados = Object.getOwnPropertyNames(snapshot.val());
+      empleados.forEach((empleado, idx) => {
+        removeEmployeeAnswer(empleado);
+      })
+    }).then(()=>
+      Swal.fire({
+        icon: 'success',
+        title: 'Cuestionario eliminado',
+      })
+    )
   });
 }
 
@@ -91,8 +106,6 @@ function createEmployee(correo, password) {
   localStorage.state = "CREATE";
   secondaryApp.auth().createUserWithEmailAndPassword(correo, password);
 }
-
-
 
 function DBERegistrer(employeeuid) {
   Empleados = firebase.database().ref('Empleados/' + employeeuid);
