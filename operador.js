@@ -9,19 +9,19 @@ firebase.database().ref('/Empresas/' + localStorage.uid).once('value', function 
 
 insertEmployees();
 
-function insertEmployees(){
+function insertEmployees() {
     firebase.database().ref('/Empresas/' + localStorage.uid + '/Empleados').once('value', function (snapshot) {
-    var empleados = Object.getOwnPropertyNames(snapshot.val());
-    empleados.forEach((empleado, idx) => {
-        firebase.database().ref('/Empleados/' + empleado).once('value', function (snapshot) {
-            // Create card element
-            const card = document.createElement('div');
-            card.classList = 'card-body';
-            // Construct card content
-            var restante = 100 - snapshot.child('/cuestionario/porcentaje').val();
-            var estado = snapshot.child('estado').val() ? "Deshabilitar" : "Habilitar";
-            var hide = snapshot.child('cuestionario/Pregunta 1').val() === "" ? "d-none" : "";
-            const graficos = `
+        var empleados = Object.getOwnPropertyNames(snapshot.val());
+        empleados.forEach((empleado, idx) => {
+            firebase.database().ref('/Empleados/' + empleado).once('value', function (snapshot) {
+                // Create card element
+                const card = document.createElement('div');
+                card.classList = 'card-body';
+                // Construct card content
+                var restante = 100 - snapshot.child('/cuestionario/porcentaje').val();
+                var estado = snapshot.child('estado').val() ? "Deshabilitar" : "Habilitar";
+                var hide = snapshot.child('cuestionario/Pregunta 1').val() === "" ? "d-none" : "";
+                const graficos = `
             <h6>${snapshot.child('/cuestionario/puntaje').val()}/${snapshot.child('/cuestionario/maxscore').val()}
             </h6>
             <div class="progress mb-3">
@@ -32,7 +32,7 @@ function insertEmployees(){
                     style="width: ${restante}%" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             `;
-            const content = `
+                const content = `
             <div id="user-${empleado}">
                 <div class="card mb-12 shadow" style="max-width: 540px;">
                     <div class="row no-gutters">
@@ -46,8 +46,8 @@ function insertEmployees(){
                                 <div>
                                     <div id="en-${empleado}" class="btn btn-dark shadow enable">${estado}</div>
                                     <div id="rmq-${empleado}" class="btn btn-dark shadow deleteqtn ">Eliminar Evaluacion</div>
-                                    <div id="eval-${empleado}" class="btn btn-dark shadow showqtn ">ver Evaluacion</div>
-                                    <div class="btn btn-dark shadow">Actualizar información</a>
+                                    <div id="eval-${empleado}" class="btn btn-dark shadow showqtn ">Ver Evaluacion</div>
+                                    <a href="actualizar.html" id="act-${empleado}"class="btn btn-dark shadow update">Actualizar información</a>
                                     <div id="del-${empleado}" class="btn btn-dark shadow delEmp">Eliminar empleado</a>
                                 </div>
                             </div>
@@ -55,40 +55,43 @@ function insertEmployees(){
                     </div>
                 </div>
             </div>`;
-            subscribe(empleado)
-            // Append newyly created card element to the container
-            container.innerHTML += content;
-        }).then(() => {
-            
-            $('.enable').click(function (event) {
-                let target = $(event.target);
-                target.addClass('disabled');
-                if (target.text() === "Habilitar") {
-                    enableEmployee( target.attr("id").substring(3), target)
-                } else {
-                    disableEmployee(target.attr("id").substring(3), target)
-                }
-            });
+                subscribe(empleado)
+                // Append newyly created card element to the container
+                container.innerHTML += content;
+            }).then(() => {
+                $('.update').click(function (event) {
+                    let target = $(event.target);
+                    sessionStorage.setItem("empleadotoupdate", target.attr("id").substring(4));
+                });
+                $('.enable').click(function (event) {
+                    let target = $(event.target);
+                    target.addClass('disabled');
+                    if (target.text() === "Habilitar") {
+                        enableEmployee(target.attr("id").substring(3), target)
+                    } else {
+                        disableEmployee(target.attr("id").substring(3), target)
+                    }
+                });
 
-            $('.deleteqtn').click(function (event) {
-                let target = $(event.target);
-                let uid=target.attr("id").substring(4);
-                removeEmployeeAnswer(uid);
-            })
-            /*modal */
-            $(".showqtn").click(function (event) {
-                let uid=target.attr("id").substring(5);
-            })
+                $('.deleteqtn').click(function (event) {
+                    let target = $(event.target);
+                    let uid = target.attr("id").substring(4);
+                    removeEmployeeAnswer(uid);
+                })
+                /*modal */
+                $(".showqtn").click(function (event) {
+                    let uid = target.attr("id").substring(5);
+                })
 
-            $(".delEmp").click(function (event) {
-                let target = $(event.target);
-                let uid=target.attr("id").substring(4);
-                removeEmployeeAnswer(uid);
-            })
-            
-        });;
+                $(".delEmp").click(function (event) {
+                    let target = $(event.target);
+                    let uid = target.attr("id").substring(4);
+                    removeEmployeeAnswer(uid);
+                })
+
+            });;
+        })
     })
-})
 }
 
 
@@ -96,13 +99,13 @@ function insertEmployees(){
 function subscribe(employeeuid) {
     firebase.database().ref('/Empleados/' + employeeuid + '/cuestionario').on("value", function (snapshot) {
         /*esta vacio */
-      if (snapshot.child('Pregunta 1').val() === ''){
-        $( '#rmq-'+employeeuid).addClass('d-none');
-        $( '#eval-'+employeeuid).addClass('d-none');
-      }else{
-          console.log(":añadio algo");
-        $( '#rmq-'+employeeuid).removeClass('d-none');
-        $( '#eval-'+employeeuid).removeClass('d-none');
-      }
+        if (snapshot.child('Pregunta 1').val() === '') {
+            $('#rmq-' + employeeuid).addClass('d-none');
+            $('#eval-' + employeeuid).addClass('d-none');
+        } else {
+            console.log(":añadio algo");
+            $('#rmq-' + employeeuid).removeClass('d-none');
+            $('#eval-' + employeeuid).removeClass('d-none');
+        }
     });
-  }
+}

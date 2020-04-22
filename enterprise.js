@@ -6,19 +6,19 @@ function myProfile() {
     });
 }
 
-$('#registrarCuestionario').click(function(){
+$('#registrarCuestionario').click(function () {
   event.preventDefault();
   createQuestions();
 });
 
-$('#crearEmpleado').click(function(){
+$('#crearEmpleado').click(function () {
   event.preventDefault();
-  createEmployee($('#correo').val(),$('#password').val());
+  createEmployee($('#correo').val(), $('#password').val());
 });
 
-$('#actualizarEmpleado').click(function(){
+$('#actualizarEmpleado').click(function () {
   event.preventDefault();
-  updateEmployee(employeeuid);
+  updateEmployee(sessionStorage.getItem("empleadotoupdate"));
 });
 
 function removeEmployeeAnswer(employeeuid) {
@@ -134,9 +134,9 @@ function removeEmployee(employeeuid) {
       let email = snapshot.child('correo').val()
       let pwd = snapshot.child('password').val()
       firebase.database().ref('/Empresas/' + localStorage.uid + '/Empleados/' + employeeuid).remove().then(() => {
-        firebase.database().ref('/Empresas/' + localStorage.uid + '/Historial/' + employeeuid).remove().then(()=>{
+        firebase.database().ref('/Empresas/' + localStorage.uid + '/Historial/' + employeeuid).remove().then(() => {
           secondaryApp.auth().signInWithEmailAndPassword(email, pwd).then(() => {
-            localStorage.state="DELETE"
+            localStorage.state = "DELETE"
             secondaryApp.auth().currentUser.delete().then(() => {
               Swal.fire({
                 icon: 'success',
@@ -146,7 +146,7 @@ function removeEmployee(employeeuid) {
           });
 
         });
-        
+
       });
     })
   });
@@ -160,11 +160,12 @@ function seeEmployeeProfile(employeeuid) {
 }
 
 function updateEmployee(employeeuid) {
-  changepassword = true;
+  changepassword = $('#password').val() === "" ? false : true;
   firebase.database().ref('/Empleados/' + employeeuid).update({
     'direccion': $('#direccion').val(),
     'nombre': $('#nombreOperador').val(),
   }).then(() => {
+    console.log(changepassword);
     if (changepassword) {
       localStorage.state = "UPDATE";
       firebase.database().ref('/Empresas/' + localStorage.uid + '/Empleados/' + employeeuid).once('value').then(function (snapshot) {
@@ -178,7 +179,7 @@ function updateEmployee(employeeuid) {
             }).then(Swal.fire({
               icon: 'success',
               title: 'Datos del empleado actualizados',
-            }));
+            })).then(window.location = "administracion.html");
           }).catch(function (error) {
             //update passerrors
             // An error happened.
@@ -187,20 +188,25 @@ function updateEmployee(employeeuid) {
           //login errors
         });
       });
+    } else {
+      Swal.fire({
+        icon: 'success',
+        title: 'Datos del empleado actualizados',
+      }).then(window.location = "administracion.html");
     }
   })
 }
 
-function enableEmployee(employeeuid,target) {
+function enableEmployee(employeeuid, target) {
   firebase.database().ref('/Empleados/' + employeeuid).update({
     'estado': true
-  }).catch((e)=>{
+  }).catch((e) => {
     swal.fire({
       icon: 'error',
       title: 'ups ha ocurrido un error'
-      });
-      target.removeClass('disabled');
-  }).then(()=>{
+    });
+    target.removeClass('disabled');
+  }).then(() => {
     swal.fire({
       icon: 'success',
       title: 'Operador habilitado'
@@ -210,19 +216,19 @@ function enableEmployee(employeeuid,target) {
   })
 }
 
-function disableEmployee(employeeuid,target) {
+function disableEmployee(employeeuid, target) {
   firebase.database().ref('/Empleados/' + employeeuid).update({
     'estado': false
-  }).catch((e)=>{
+  }).catch((e) => {
     swal.fire({
       icon: 'error',
       title: 'ups ha ocurrido un error'
-      });
-      target.removeClass('disabled');
-  }).then(()=>{
+    });
+    target.removeClass('disabled');
+  }).then(() => {
     swal.fire({
-    icon: 'success',
-    title: 'Operador inhabilitado'
+      icon: 'success',
+      title: 'Operador inhabilitado'
     });
     target.text('Habilitar');
     target.removeClass('disabled');
