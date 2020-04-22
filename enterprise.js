@@ -15,16 +15,9 @@ $('#crearEmpleado').click(function(){
   event.preventDefault();
   createEmployee($('#correo').val(),$('#password').val());
 });
-
-$('.enable').click(function(event){
-   let target=$( event.target);
-   target.addClass('disabled');
-  if(target.text()==="Habilitar"){
-    enableEmployee(localStorage.employeeuid,target)
-  }else{
-    disableEmployee(localStorage.employeeuid,target)
-  }
-})
+window.onload = () => {
+  
+}
 
 function removeEmployeeAnswer(employeeuid) {
   firebase.database().ref('/Empleados/' + employeeuid + '/cuestionario').update({

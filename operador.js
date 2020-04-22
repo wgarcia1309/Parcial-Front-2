@@ -14,9 +14,20 @@ firebase.database().ref('/Empresas/' + localStorage.uid + '/Empleados').once('va
             const card = document.createElement('div');
             card.classList = 'card-body';
             // Construct card content
-            var restante = 100 - snapshot.child('/cuestionario/score').val();
+            var restante = 100 - snapshot.child('/cuestionario/porcentaje').val();
             var estado = snapshot.child('estado').val() ? "Deshabilitar" : "Habilitar";
-            var didTheTest = snapshot.child('cuestionario/Pregunta 1').val() === "" ? "disabled" : "";
+            const graficos = `
+            <h6>${snapshot.child('/cuestionario/puntaje').val()}/${snapshot.child('/cuestionario/maxscore').val()}
+            </h6>
+            <div class="progress mb-3">
+                <div id="progress" class="progress-bar bg-dark progress-bar-striped" role="progressbar"
+                    style="width: ${snapshot.child('/cuestionario/porcentaje').val()}%" aria-valuemin="0"
+                    aria-valuemax="100"></div>
+                <div id="progress2" class="progress-bar bg-warning" role="progressbar"
+                    style="width: ${restante}%" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            `;
+            var didTheTest = snapshot.child('cuestionario/Pregunta 1').val() === "" ? "" : graficos;
             const content = `
             <div class="card mb-12 shadow" style="max-width: 540px;">
             <div class="row no-gutters">
@@ -27,18 +38,11 @@ firebase.database().ref('/Empresas/' + localStorage.uid + '/Empleados').once('va
                     <div class="card-body">
                         <h4 class="card-title">${snapshot.child('/nombre').val()}</h4>
                         <p class="card-text">${snapshot.child('/direccion').val()}</p>
-                        <h6>${snapshot.child('/cuestionario/puntaje').val()}/${snapshot.child('/cuestionario/maxscore').val()}
-                        </h6>
-                        <div class="progress mb-3">
-                            <div id="progress" class="progress-bar bg-dark progress-bar-striped" role="progressbar"
-                                style="width: ${snapshot.child('/cuestionario/porcentaje').val()}%" aria-valuemin="0"
-                                aria-valuemax="100"></div>
-                            <div id="progress2" class="progress-bar bg-warning" role="progressbar"
-                                style="width: ${restante}%" aria-valuemin="0" aria-valuemax="100"></div>
-                        </div>
+                        ${didTheTest}
                         <div>
-                            <a href="evaluacion.html" class="btn btn-dark shadow enable">${estado}</a>
-                            <a href="evaluacion.html" class="btn btn-dark shadow">Eliminar Evaluacion</a>
+                            <a class="btn btn-dark shadow enable">${estado}</a>
+                            <a href="" class="btn btn-dark shadow">Eliminar Evaluacion</a>
+                            <a href="" class="btn btn-dark shadow">Actualizar información</a>
                         </div>
                     </div>
                 </div>
@@ -49,5 +53,15 @@ firebase.database().ref('/Empresas/' + localStorage.uid + '/Empleados').once('va
             // Append newyly created card element to the container
             container.innerHTML += content;
         });
+    })
+}).then(() => {
+    $('.enable').click(function (event) {
+        let target = $(event.target);
+        target.addClass('disabled');
+        if (target.text() === "Habilitar") {
+            enableEmployee(localStorage.employeeuid, target)
+        } else {
+            disableEmployee(localStorage.employeeuid, target)
+        }
     })
 });
