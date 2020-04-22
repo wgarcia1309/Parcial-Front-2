@@ -78,7 +78,12 @@ function insertEmployees() {
                     disableEmployee(target.attr("id").substring(3), target)
                 }
             });
-
+            
+           $('.update').click(function (event) {
+                    let target = $(event.target);
+                    sessionStorage.setItem("empleadotoupdate", target.attr("id").substring(4));
+                });
+          
             $('.deleteqtn').click(function (event) {
                 localStorage.status="INDIVIDUAL"
                 let target = $(event.target);
@@ -90,21 +95,20 @@ function insertEmployees() {
                 let target = $(event.target);
                 let uid=target.attr("id").substring(5);
             })
+             $(".delEmp").click(function (event) {
+                    let target = $(event.target);
+                    let uid = target.attr("id").substring(4);
+                    removeEmployee(uid)
+             })
 
-            $(".delEmp").click(function (event) {
-                let target = $(event.target);
-                let uid=target.attr("id").substring(4);
-                removeEmployee(uid)
-                
-            })
-            
-        });;
+            });
 
+        })
     })
 })
 }
-function removebox(uid){
-    var element = document.getElementById('user-'+uid);
+function removebox(uid) {
+    var element = document.getElementById('user-' + uid);
     element.parentNode.removeChild(element);
 }
 
@@ -125,4 +129,4 @@ function subscribe(employeeuid) {
         $( '#eval-'+employeeuid).removeClass('d-none');
       }
     });
-  }
+}
