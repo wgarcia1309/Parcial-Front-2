@@ -54,58 +54,59 @@ function insertEmployees() {
                         </div>
                     </div>
                 </div>
+
             </div>`;
-                subscribe(empleado)
-                // Append newyly created card element to the container
-                container.innerHTML += content;
-            }).then(() => {
-                $('.update').click(function (event) {
-                    let target = $(event.target);
-                    sessionStorage.setItem("empleadotoupdate", target.attr("id").substring(4));
-                });
-                $('.enable').click(function (event) {
-                    let target = $(event.target);
-                    target.addClass('disabled');
-                    if (target.text() === "Habilitar") {
-                        enableEmployee(target.attr("id").substring(3), target)
-                    } else {
-                        disableEmployee(target.attr("id").substring(3), target)
-                    }
-                });
+            subscribe(empleado)
+            // Append newyly created card element to the container
+            container.innerHTML += content;
+        }).then(() => {
+            
+            $('.enable').click(function (event) {
+                let target = $(event.target);
+                target.addClass('disabled');
+                if (target.text() === "Habilitar") {
+                    enableEmployee( target.attr("id").substring(3), target)
+                } else {
+                    disableEmployee(target.attr("id").substring(3), target)
+                }
+            });
 
-                $('.deleteqtn').click(function (event) {
-                    let target = $(event.target);
-                    let uid = target.attr("id").substring(4);
-                    removeEmployeeAnswer(uid);
-                })
-                /*modal */
-                $(".showqtn").click(function (event) {
-                    let uid = target.attr("id").substring(5);
-                })
+            $('.deleteqtn').click(function (event) {
+                let target = $(event.target);
+                let uid=target.attr("id").substring(4);
+                removeEmployeeAnswer(uid);
+            })
+            /*modal */
+            $(".showqtn").click(function (event) {
+                let target = $(event.target);
+                let uid=target.attr("id").substring(5);
+            })
 
-                $(".delEmp").click(function (event) {
-                    let target = $(event.target);
-                    let uid = target.attr("id").substring(4);
-                    removeEmployeeAnswer(uid);
-                })
+            $(".delEmp").click(function (event) {
+                let target = $(event.target);
+                let uid=target.attr("id").substring(4);
+                removeEmployee(uid)
+                
+            })
+            
+        });;
 
-            });;
-        })
     })
 }
-
+function removebox(uid){
+    var element = document.getElementById('user-'+uid);
+    element.parentNode.removeChild(element);
+}
 
 
 function subscribe(employeeuid) {
     firebase.database().ref('/Empleados/' + employeeuid + '/cuestionario').on("value", function (snapshot) {
-        /*esta vacio */
-        if (snapshot.child('Pregunta 1').val() === '') {
-            $('#rmq-' + employeeuid).addClass('d-none');
-            $('#eval-' + employeeuid).addClass('d-none');
-        } else {
-            console.log(":añadio algo");
-            $('#rmq-' + employeeuid).removeClass('d-none');
-            $('#eval-' + employeeuid).removeClass('d-none');
-        }
+      if (snapshot.child('Pregunta 1').val() === ''){
+        $( '#rmq-'+employeeuid).addClass('d-none');
+        $( '#eval-'+employeeuid).addClass('d-none');
+      }else{
+        $( '#rmq-'+employeeuid).removeClass('d-none');
+        $( '#eval-'+employeeuid).removeClass('d-none');
+      }
     });
-}
+  }
