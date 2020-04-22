@@ -6,13 +6,15 @@ firebase.database().ref('/Empresas/' + localStorage.uid).once('value', function 
     document.getElementById("representanteCorreo").innerHTML = snapshot.child('/Correo').val();
 });
 
-
+var nombres=[];
+var first=[]
 insertEmployees();
 
 function insertEmployees(){
     firebase.database().ref('/Empresas/' + localStorage.uid + '/Empleados').once('value', function (snapshot) {
     var empleados = Object.getOwnPropertyNames(snapshot.val());
     empleados.forEach((empleado, idx) => {
+        notificaciones="";
         firebase.database().ref('/Empleados/' + empleado).once('value', function (snapshot) {
             // Create card element
             const card = document.createElement('div');
@@ -54,12 +56,18 @@ function insertEmployees(){
                     </div>
                 </div>
             </div>
-            `;
+`;
+            
+            nombres[empleado]=snapshot.child('/nombre').val();
+            first[empleado]=true;
+            notificaciones+=`
+            <div id="${empleado}-${snapshot.child('/nombre').val()}" class="notify">
+            </div>`
             subscribe(empleado)
             // Append newyly created card element to the container
             container.innerHTML += content;
         }).then(() => {
-            
+            container.innerHTML+=notificaciones;
             $('.enable').click(function (event) {
                 let target = $(event.target);
                 target.addClass('disabled');
@@ -71,6 +79,7 @@ function insertEmployees(){
             });
 
             $('.deleteqtn').click(function (event) {
+                localStorage.status="INDIVIDUAL"
                 let target = $(event.target);
                 let uid=target.attr("id").substring(4);
                 removeEmployeeAnswer(uid);
@@ -104,9 +113,14 @@ function subscribe(employeeuid) {
         $( '#rmq-'+employeeuid).addClass('d-none');
         $( '#eval-'+employeeuid).addClass('d-none');
       }else{
+            if(first[employeeuid]){
+                first[employeeuid]=!first[employeeuid];
+            }else{
+                $("#navbarNav").notify(nombres[employeeuid]+" ha realizado una encuesta",  { position:"bottom",className:"info" },);
+            }
+          
         $( '#rmq-'+employeeuid).removeClass('d-none');
         $( '#eval-'+employeeuid).removeClass('d-none');
       }
     });
   }
-  
