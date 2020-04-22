@@ -65,7 +65,7 @@ function subscribe() {
         snapshot.val()
       ).then(() => {
         firebase.database().ref('Empresas/' + localStorage.empresauid + '/Historial/' + localStorage.uid).update({
-          'fecha': Date.now()
+          'fecha': new Date().toLocaleString("en-US", {timeZone: "America/Mexico_City"})
         }
         )
       });

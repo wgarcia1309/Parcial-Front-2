@@ -8,8 +8,6 @@ firebase.database().ref('/Empresas/' + localStorage.uid + '/Historial').once('va
             // Construct card content
             var nombreEmpleado = snapshot2.child('/nombre').val();
             var fecha = snapshot.child(empleado + '/fecha').val();
-            var colombiaTime = fecha.toLocaleString("en-US", {timeZone: "Colombia/Bogota"});
-            colombiaTime = colombiaTime.toLocaleString()
             const content = `
             <div id="user-${empleado}">
                 <div class="card mb-12 shadow" style="max-width: 540px;">
@@ -20,7 +18,7 @@ firebase.database().ref('/Empresas/' + localStorage.uid + '/Historial').once('va
                         <div class="col-md-8">
                             <div class="card-body">
                                 <h4 class="card-title">Nombre: ${nombreEmpleado}</h4>
-                                <p class="card-text">Fecha de realización: ${colombiaTime}</p>
+                                <p class="card-text">Fecha de realización: ${fecha}</p>
                             </div>
                         </div>
                     </div>
