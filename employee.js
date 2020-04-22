@@ -63,7 +63,12 @@ function subscribe() {
     if (!(snapshot.child('Pregunta 1').val() === '')) {
       firebase.database().ref('Empresas/' + localStorage.empresauid + '/Historial/' + localStorage.uid).set(
         snapshot.val()
-      );
+      ).then(() => {
+        firebase.database().ref('Empresas/' + localStorage.empresauid + '/Historial/' + localStorage.uid).update({
+          'fecha': Date.now()
+        }
+        )
+      });
     }
   });
 }
