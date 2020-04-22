@@ -24,27 +24,25 @@ function insertEmployees() {
                 var hide = snapshot.child('cuestionario/Pregunta 1').val() === "" ? "d-none" : "";
 
                 const content = `
-            <div id="user-${empleado}">
-                <div class="card mb-12 shadow" style="max-width: 540px;">
+            <div id="user-${empleado}" class="col-6 card  mb-12 shadow" style="max-width: 420px;">
                     <div class="row no-gutters">
                         <div class="col-md-4">
                             <img src="./image/profile.jpg" class="card-img">
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-8">
                             <div class="card-body">
                                 <h4 class="card-title">${snapshot.child('/nombre').val()}</h4>
                                 <p class="card-text">${snapshot.child('/direccion').val()}</p>
                                 <div>
-                                    <div id="en-${empleado}" class="btn btn-dark shadow enable">${estado}</div>
-                                    <div id="rmq-${empleado}" class="btn btn-dark shadow deleteqtn ">Eliminar Evaluacion</div>
+                                    <div id="en-${empleado}" class="btn btn-dark col-12 mb-1 shadow enable ">${estado}</div>
+                                    <div id="rmq-${empleado}" class="btn btn-dark col-12 mb-1 shadow deleteqtn ">Eliminar Evaluacion</div>
                                     <!-- Button trigger modal -->
-                                    <div id="eval-${empleado}" class="btn btn-dark showqtn"> 
+                                    <div id="eval-${empleado}" class="btn btn-dark col-12 mb-1 showqtn"> 
                                     Ver Evaluacion
                                     </div>
-                                    <a href="actualizar.html" id="act-${empleado}"class="btn btn-dark shadow update">Actualizar información</a>
-                                    <div id="del-${empleado}" class="btn btn-dark shadow delEmp">Eliminar empleado</a>
+                                    <a href="actualizar.html" id="act-${empleado}"class="btn btn-dark col-12 mb-1 shadow update">Actualizar información</a>
+                                    <div id="del-${empleado}" class="btn btn-dark col-12 mb-1 shadow delEmp">Eliminar empleado</a>
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>

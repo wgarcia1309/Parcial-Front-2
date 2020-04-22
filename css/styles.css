@@ -100,6 +100,13 @@ li {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
+    height: calc(100vh - 80px);
+}
+.center-section-enter{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;  
+    height: calc(100vh - 40vh);
 }
 
 .center-space {
@@ -107,8 +114,6 @@ li {
     margin: 0 0 0 0;
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
-    height: calc(100vh - 80px);
 }
 
 .center-chart {
