@@ -15,9 +15,7 @@ $('#crearEmpleado').click(function(){
   event.preventDefault();
   createEmployee($('#correo').val(),$('#password').val());
 });
-window.onload = () => {
-  
-}
+
 
 function removeEmployeeAnswer(employeeuid) {
   firebase.database().ref('/Empleados/' + employeeuid + '/cuestionario').update({
@@ -107,7 +105,7 @@ function DBERegistrer(employeeuid) {
       'Pregunta 3': '',
       'Pregunta 4': '',
       'Pregunta 5': '',
-      'score': -1,
+      'puntaje': -1,
       'maxscore': -1,
       'porcentaje': -1
     }
@@ -132,14 +130,19 @@ function removeEmployee(employeeuid) {
       let email = snapshot.child('correo').val()
       let pwd = snapshot.child('password').val()
       firebase.database().ref('/Empresas/' + localStorage.uid + '/Empleados/' + employeeuid).remove().then(() => {
-        secondaryApp.auth().signInWithEmailAndPassword(email, pwd).then(() => {
-          secondaryApp.auth().currentUser.delete().then(() => {
-            Swal.fire({
-              icon: 'success',
-              title: 'Empleado eliminado',
-            })
+        firebase.database().ref('/Empresas/' + localStorage.uid + '/Historial/' + employeeuid).remove().then(()=>{
+          secondaryApp.auth().signInWithEmailAndPassword(email, pwd).then(() => {
+            localStorage.state="DELETE"
+            secondaryApp.auth().currentUser.delete().then(() => {
+              Swal.fire({
+                icon: 'success',
+                title: 'Empleado eliminado',
+              })
+            });
           });
+
         });
+        
       });
     })
   });
@@ -221,13 +224,3 @@ function disableEmployee(employeeuid,target) {
   })
 }
 
-/*para todo empleado*/
-function subcribe(employeeuid) {
-  firebase.database().ref('/Empleados/' + employeeuid + '/cuestionario').on("value", function (snapshot) {
-    console.log(snapshot.child('Pregunta 1').val())
-    if (!(snapshot.child('Pregunta 1').val() === '')) {
-      /*definir mensaje */
-      console.log(snapshot.child('Pregunta 1').val())
-    }
-  });
-}
