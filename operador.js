@@ -9,19 +9,19 @@ firebase.database().ref('/Empresas/' + localStorage.uid).once('value', function 
 
 insertEmployees();
 
-function insertEmployees(){
+function insertEmployees() {
     firebase.database().ref('/Empresas/' + localStorage.uid + '/Empleados').once('value', function (snapshot) {
-    var empleados = Object.getOwnPropertyNames(snapshot.val());
-    empleados.forEach((empleado, idx) => {
-        firebase.database().ref('/Empleados/' + empleado).once('value', function (snapshot) {
-            // Create card element
-            const card = document.createElement('div');
-            card.classList = 'card-body';
-            // Construct card content
-            var restante = 100 - snapshot.child('/cuestionario/porcentaje').val();
-            var estado = snapshot.child('estado').val() ? "Deshabilitar" : "Habilitar";
-            var hide = snapshot.child('cuestionario/Pregunta 1').val() === "" ? "d-none" : "";
-            const graficos = `
+        var empleados = Object.getOwnPropertyNames(snapshot.val());
+        empleados.forEach((empleado, idx) => {
+            firebase.database().ref('/Empleados/' + empleado).once('value', function (snapshot) {
+                // Create card element
+                const card = document.createElement('div');
+                card.classList = 'card-body';
+                // Construct card content
+                var restante = 100 - snapshot.child('/cuestionario/porcentaje').val();
+                var estado = snapshot.child('estado').val() ? "Deshabilitar" : "Habilitar";
+                var hide = snapshot.child('cuestionario/Pregunta 1').val() === "" ? "d-none" : "";
+                const graficos = `
             <h6>${snapshot.child('/cuestionario/puntaje').val()}/${snapshot.child('/cuestionario/maxscore').val()}
             </h6>
             <div class="progress mb-3">
@@ -31,8 +31,8 @@ function insertEmployees(){
                 <div id="progress2" class="progress-bar bg-warning" role="progressbar"
                     style="width: ${restante}%" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            `;   
-            const content = `
+            `;
+                const content = `
             <div id="user-${empleado}">
                 <div class="card mb-12 shadow" style="max-width: 540px;">
                     <div class="row no-gutters">
@@ -46,15 +46,16 @@ function insertEmployees(){
                                 <div>
                                     <div id="en-${empleado}" class="btn btn-dark shadow enable">${estado}</div>
                                     <div id="rmq-${empleado}" class="btn btn-dark shadow deleteqtn ">Eliminar Evaluacion</div>
-                                    <div id="eval-${empleado}" class="btn btn-dark shadow showqtn ">Ver evaluacion</div>
-                                    <div id="del-${empleado}" class="btn btn-dark shadow delEmp">Eliminar empleado</div>
+                                    <div id="eval-${empleado}" class="btn btn-dark shadow showqtn ">Ver Evaluacion</div>
+                                    <a href="actualizar.html" id="act-${empleado}"class="btn btn-dark shadow update">Actualizar información</a>
+                                    <div id="del-${empleado}" class="btn btn-dark shadow delEmp">Eliminar empleado</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            `;
+
+            </div>`;
             subscribe(empleado)
             // Append newyly created card element to the container
             container.innerHTML += content;
@@ -89,8 +90,8 @@ function insertEmployees(){
             })
             
         });;
+
     })
-})
 }
 function removebox(uid){
     var element = document.getElementById('user-'+uid);
@@ -109,4 +110,3 @@ function subscribe(employeeuid) {
       }
     });
   }
-  
