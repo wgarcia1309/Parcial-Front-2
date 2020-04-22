@@ -125,7 +125,7 @@ function DBERegistrer(employeeuid) {
 
 function removeEmployee(employeeuid) {
   localStorage.state = "DELETE"
-  firebase.database().ref('/Empleados/' + employeeuid).remove().then(() => {
+  firebase.database().ref('/Empleados/' + employeeuid).remove().then(() => { 
     firebase.database().ref('/Empresas/' + localStorage.uid + '/Empleados/' + employeeuid).once('value').then(function (snapshot) {
       let email = snapshot.child('correo').val()
       let pwd = snapshot.child('password').val()
@@ -137,6 +137,8 @@ function removeEmployee(employeeuid) {
               Swal.fire({
                 icon: 'success',
                 title: 'Empleado eliminado',
+              }).then(()=>{
+                removebox(employeeuid);
               })
             });
           });

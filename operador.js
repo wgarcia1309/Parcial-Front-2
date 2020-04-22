@@ -31,7 +31,7 @@ function insertEmployees(){
                 <div id="progress2" class="progress-bar bg-warning" role="progressbar"
                     style="width: ${restante}%" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            `;
+            `;   
             const content = `
             <div id="user-${empleado}">
                 <div class="card mb-12 shadow" style="max-width: 540px;">
@@ -46,15 +46,15 @@ function insertEmployees(){
                                 <div>
                                     <div id="en-${empleado}" class="btn btn-dark shadow enable">${estado}</div>
                                     <div id="rmq-${empleado}" class="btn btn-dark shadow deleteqtn ">Eliminar Evaluacion</div>
-                                    <div id="eval-${empleado}" class="btn btn-dark shadow showqtn ">ver Evaluacion</div>
-                                    <div class="btn btn-dark shadow">Actualizar información</a>
-                                    <div id="del-${empleado}" class="btn btn-dark shadow delEmp">Eliminar empleado</a>
+                                    <div id="eval-${empleado}" class="btn btn-dark shadow showqtn ">Ver evaluacion</div>
+                                    <div id="del-${empleado}" class="btn btn-dark shadow delEmp">Eliminar empleado</div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>`;
+            </div>
+            `;
             subscribe(empleado)
             // Append newyly created card element to the container
             container.innerHTML += content;
@@ -77,32 +77,36 @@ function insertEmployees(){
             })
             /*modal */
             $(".showqtn").click(function (event) {
+                let target = $(event.target);
                 let uid=target.attr("id").substring(5);
             })
 
             $(".delEmp").click(function (event) {
                 let target = $(event.target);
                 let uid=target.attr("id").substring(4);
-                removeEmployeeAnswer(uid);
+                removeEmployee(uid)
+                
             })
             
         });;
     })
 })
 }
-
+function removebox(uid){
+    var element = document.getElementById('user-'+uid);
+    element.parentNode.removeChild(element);
+}
 
 
 function subscribe(employeeuid) {
     firebase.database().ref('/Empleados/' + employeeuid + '/cuestionario').on("value", function (snapshot) {
-        /*esta vacio */
       if (snapshot.child('Pregunta 1').val() === ''){
         $( '#rmq-'+employeeuid).addClass('d-none');
         $( '#eval-'+employeeuid).addClass('d-none');
       }else{
-          console.log(":añadio algo");
         $( '#rmq-'+employeeuid).removeClass('d-none');
         $( '#eval-'+employeeuid).removeClass('d-none');
       }
     });
   }
+  
