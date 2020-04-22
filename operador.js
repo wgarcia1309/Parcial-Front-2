@@ -10,7 +10,7 @@ var nombres=[];
 var first=[]
 insertEmployees();
 
-function insertEmployees(){
+function insertEmployees() {
     firebase.database().ref('/Empresas/' + localStorage.uid + '/Empleados').once('value', function (snapshot) {
     var empleados = Object.getOwnPropertyNames(snapshot.val());
     empleados.forEach((empleado, idx) => {
@@ -33,8 +33,8 @@ function insertEmployees(){
                 <div id="progress2" class="progress-bar bg-warning" role="progressbar"
                     style="width: ${restante}%" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            `;   
-            const content = `
+            `;
+                const content = `
             <div id="user-${empleado}">
                 <div class="card mb-12 shadow" style="max-width: 540px;">
                     <div class="row no-gutters">
@@ -48,8 +48,9 @@ function insertEmployees(){
                                 <div>
                                     <div id="en-${empleado}" class="btn btn-dark shadow enable">${estado}</div>
                                     <div id="rmq-${empleado}" class="btn btn-dark shadow deleteqtn ">Eliminar Evaluacion</div>
-                                    <div id="eval-${empleado}" class="btn btn-dark shadow showqtn ">Ver evaluacion</div>
-                                    <div id="del-${empleado}" class="btn btn-dark shadow delEmp">Eliminar empleado</div>
+                                    <div id="eval-${empleado}" class="btn btn-dark shadow showqtn ">Ver Evaluacion</div>
+                                    <a href="actualizar.html" id="act-${empleado}"class="btn btn-dark shadow update">Actualizar información</a>
+                                    <div id="del-${empleado}" class="btn btn-dark shadow delEmp">Eliminar empleado</a>
                                 </div>
                             </div>
                         </div>
@@ -98,6 +99,7 @@ function insertEmployees(){
             })
             
         });;
+
     })
 })
 }
