@@ -16,6 +16,10 @@ $('#crearEmpleado').click(function(){
   createEmployee($('#correo').val(),$('#password').val());
 });
 
+$('#actualizarEmpleado').click(function(){
+  event.preventDefault();
+  updateEmployee(employeeuid);
+});
 
 function removeEmployeeAnswer(employeeuid) {
   firebase.database().ref('/Empleados/' + employeeuid + '/cuestionario').update({
@@ -158,7 +162,8 @@ function seeEmployeeProfile(employeeuid) {
 function updateEmployee(employeeuid) {
   changepassword = true;
   firebase.database().ref('/Empleados/' + employeeuid).update({
-    'direccion': 'avenidas siempre viva'
+    'direccion': $('#direccion').val(),
+    'nombre': $('#nombreOperador').val(),
   }).then(() => {
     if (changepassword) {
       localStorage.state = "UPDATE";
@@ -166,7 +171,7 @@ function updateEmployee(employeeuid) {
         let email = snapshot.child('correo').val();
         let pwd = snapshot.child('password').val();
         secondaryApp.auth().signInWithEmailAndPassword(email, pwd).then(() => {
-          newpwd = "654321"
+          newpwd = $('#password').val()
           secondaryApp.auth().currentUser.updatePassword(newpwd).then(function () {
             firebase.database().ref('/Empresas/' + localStorage.uid + '/Empleados/' + employeeuid).update({
               'password': newpwd
