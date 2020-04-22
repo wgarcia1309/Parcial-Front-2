@@ -1,47 +1,9 @@
 firebase.database().ref('/Empresas/' + localStorage.empresauid + '/cuestionario').once('value', function (snapshot) {
-  document.getElementById("pregunta1").innerHTML = snapshot.child('Pregunta 1/enunciado').val();
-  document.getElementById("1opcion1").innerHTML = snapshot.child('Pregunta 1/opciones').val()[0];
-  document.getElementById("1opcion2").innerHTML = snapshot.child('Pregunta 1/opciones').val()[1];
-  document.getElementById("1opcion3").innerHTML = snapshot.child('Pregunta 1/opciones').val()[2];
-  document.getElementById("1opcion4").innerHTML = snapshot.child('Pregunta 1/opciones').val()[3];
-  document.getElementById("1op1").value = snapshot.child('Pregunta 1/opciones').val()[0];
-  document.getElementById("1op2").value = snapshot.child('Pregunta 1/opciones').val()[1];
-  document.getElementById("1op3").value = snapshot.child('Pregunta 1/opciones').val()[2];
-  document.getElementById("1op4").value = snapshot.child('Pregunta 1/opciones').val()[3];
-  document.getElementById("pregunta2").innerHTML = snapshot.child('Pregunta 2/enunciado').val();
-  document.getElementById("2opcion1").innerHTML = snapshot.child('Pregunta 2/opciones').val()[0];
-  document.getElementById("2opcion2").innerHTML = snapshot.child('Pregunta 2/opciones').val()[1];
-  document.getElementById("2opcion3").innerHTML = snapshot.child('Pregunta 2/opciones').val()[2];
-  document.getElementById("2opcion4").innerHTML = snapshot.child('Pregunta 2/opciones').val()[3];
-  document.getElementById("2op1").value = snapshot.child('Pregunta 2/opciones').val()[0];
-  document.getElementById("2op2").value = snapshot.child('Pregunta 2/opciones').val()[1];
-  document.getElementById("2op3").value = snapshot.child('Pregunta 2/opciones').val()[2];
-  document.getElementById("2op4").value = snapshot.child('Pregunta 2/opciones').val()[3];
-  document.getElementById("pregunta3").innerHTML = snapshot.child('Pregunta 3/enunciado').val();
-  document.getElementById("3opcion1").innerHTML = snapshot.child('Pregunta 3/opciones').val()[0];
-  document.getElementById("3opcion2").innerHTML = snapshot.child('Pregunta 3/opciones').val()[1];
-  document.getElementById("3opcion3").innerHTML = snapshot.child('Pregunta 3/opciones').val()[2];
-  document.getElementById("3opcion4").innerHTML = snapshot.child('Pregunta 3/opciones').val()[3];
-  document.getElementById("3op1").value = snapshot.child('Pregunta 3/opciones').val()[0];
-  document.getElementById("3op2").value = snapshot.child('Pregunta 3/opciones').val()[1];
-  document.getElementById("3op3").value = snapshot.child('Pregunta 3/opciones').val()[2];
-  document.getElementById("3op4").value = snapshot.child('Pregunta 3/opciones').val()[3];
-  document.getElementById("pregunta4").innerHTML = snapshot.child('Pregunta 4/enunciado').val();
-  document.getElementById("4opcion1").innerHTML = snapshot.child('Pregunta 4/opciones').val()[0];
-  document.getElementById("4opcion2").innerHTML = snapshot.child('Pregunta 4/opciones').val()[1];
-  document.getElementById("4opcion3").innerHTML = snapshot.child('Pregunta 4/opciones').val()[2];
-  document.getElementById("4opcion4").innerHTML = snapshot.child('Pregunta 4/opciones').val()[3];
-  document.getElementById("4op1").value = snapshot.child('Pregunta 4/opciones').val()[0];
-  document.getElementById("4op2").value = snapshot.child('Pregunta 4/opciones').val()[1];
-  document.getElementById("4op3").value = snapshot.child('Pregunta 4/opciones').val()[2];
-  document.getElementById("4op4").value = snapshot.child('Pregunta 4/opciones').val()[3];
-  document.getElementById("pregunta5").innerHTML = snapshot.child('Pregunta 5/enunciado').val();
-  document.getElementById("5opcion1").innerHTML = snapshot.child('Pregunta 5/opciones').val()[0];
-  document.getElementById("5opcion2").innerHTML = snapshot.child('Pregunta 5/opciones').val()[1];
-  document.getElementById("5opcion3").innerHTML = snapshot.child('Pregunta 5/opciones').val()[2];
-  document.getElementById("5opcion4").innerHTML = snapshot.child('Pregunta 5/opciones').val()[3];
-  document.getElementById("5op1").value = snapshot.child('Pregunta 5/opciones').val()[0];
-  document.getElementById("5op2").value = snapshot.child('Pregunta 5/opciones').val()[1];
-  document.getElementById("5op3").value = snapshot.child('Pregunta 5/opciones').val()[2];
-  document.getElementById("5op4").value = snapshot.child('Pregunta 5/opciones').val()[3];
+  for (i = 1; i < 6; i++) {
+    document.getElementById("pregunta" + i).innerHTML = snapshot.child('Pregunta ' + i + '/enunciado').val();
+    for (j = 1; j < 5; j++) {
+      document.getElementById(i + "opcion" + j).innerHTML = snapshot.child('Pregunta ' + i + '/opciones').val()[j - 1];
+      document.getElementById(i + "op" + j).value = snapshot.child('Pregunta ' + i + '/opciones').val()[j - 1];
+    }
+  }
 });

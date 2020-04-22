@@ -1,5 +1,5 @@
 firebase.database().ref('/Empleados/' + localStorage.uid).once('value', function (snapshot) {
-    var puntos = parseInt(snapshot.child('/cuestionario/score').val());
+    var puntos = parseInt(snapshot.child('/cuestionario/puntaje').val());
     var maxscore = parseInt(snapshot.child('/cuestionario/maxscore').val())
     new Chart(document.getElementById("chart"), {
         type: 'doughnut',

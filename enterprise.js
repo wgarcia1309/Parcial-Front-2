@@ -16,6 +16,15 @@ $('#crearEmpleado').click(function(){
   createEmployee($('#correo').val(),$('#password').val());
 });
 
+$('.enable').click(function(event){
+   let target=$( event.target);
+   target.addClass('disabled');
+  if(target.text()==="Habilitar"){
+    enableEmployee(localStorage.employeeuid,target)
+  }else{
+    disableEmployee(localStorage.employeeuid,target)
+  }
+})
 
 function removeEmployeeAnswer(employeeuid) {
   firebase.database().ref('/Empleados/' + employeeuid + '/cuestionario').update({
@@ -181,22 +190,42 @@ function updateEmployee(employeeuid) {
   })
 }
 
-function enableEmployee(employeeuid) {
+function enableEmployee(employeeuid,target) {
   firebase.database().ref('/Empleados/' + employeeuid).update({
     'estado': true
-  }).then(swal.fire({
-    icon: 'success',
-    title: 'Usuario habilitado'
-  }));
+  }).catch((e)=>{
+    swal.fire({
+      icon: 'error',
+      title: 'ups ha ocurrido un error'
+      });
+      target.removeClass('disabled');
+  }).then(()=>{
+    swal.fire({
+      icon: 'success',
+      title: 'Operador habilitado'
+    });
+    target.text('Deshabilitar');
+    target.removeClass('disabled');
+  })
 }
 
-function disableEmployee(employeeuid) {
+function disableEmployee(employeeuid,target) {
   firebase.database().ref('/Empleados/' + employeeuid).update({
     'estado': false
-  }).then(swal.fire({
+  }).catch((e)=>{
+    swal.fire({
+      icon: 'error',
+      title: 'ups ha ocurrido un error'
+      });
+      target.removeClass('disabled');
+  }).then(()=>{
+    swal.fire({
     icon: 'success',
-    title: 'Usuario inhabilitado'
-  }));
+    title: 'Operador inhabilitado'
+    });
+    target.text('Habilitar');
+    target.removeClass('disabled');
+  })
 }
 
 /*para todo empleado*/
