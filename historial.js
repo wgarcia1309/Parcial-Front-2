@@ -11,14 +11,14 @@ firebase.database().ref('/Empresas/' + localStorage.uid + '/Historial').once('va
             const content = `
             <div id="user-${empleado}">
                 <div class="card mb-12 shadow" style="max-width: 540px;">
-                    <div class="row no-gutters">
-                        <div class="col-md-4">
+                    <div class="row no-gutters p-1">
+                        <div class="col-12 col-sm-12 col-md-4 col-lg-4 col-xl-4">
                             <img src="./image/profile.jpg" class="card-img">
                         </div>
-                        <div class="col-md-8">
+                        <div class="col-12 col-sm-12 col-md-8   col-lg-8  col-xl-8">
                             <div class="card-body">
-                                <h4 class="card-title">Nombre: ${nombreEmpleado}</h4>
-                                <p class="card-text">Fecha de realización: ${fecha}</p>
+                                <h4 class=" text-center card-title">${nombreEmpleado}</h4>
+                                <p class=" text-center card-text">Fecha: ${fecha}</p>
                             </div>
                         </div>
                     </div>

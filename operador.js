@@ -26,13 +26,13 @@ function insertEmployees() {
                 const content = `
             <div id="user-${empleado}" class="col-6 card  mb-12 shadow" style="max-width: 420px;">
                     <div class="row no-gutters">
-                        <div class="col-md-4">
+                        <div class="col-12 col-md-12 col-lg-4 col-xl-4 mt-3">
                             <img src="./image/profile.jpg" class="card-img">
                         </div>
-                        <div class="col-8">
+                        <div class="col-12 col-md-12 col-lg-8 col-xl-8 mt-3">
                             <div class="card-body">
-                                <h4 class="card-title">${snapshot.child('/nombre').val()}</h4>
-                                <p class="card-text">${snapshot.child('/direccion').val()}</p>
+                                <h4 class=" text-center card-title">${snapshot.child('/nombre').val()}</h4>
+                                <p class=" text-center card-text">${snapshot.child('/direccion').val()}</p>
                                 <div>
                                     <div id="en-${empleado}" class="btn btn-dark col-12 mb-1 shadow enable ">${estado}</div>
                                     <div id="rmq-${empleado}" class="btn btn-dark col-12 mb-1 shadow deleteqtn ">Eliminar Evaluacion</div>
